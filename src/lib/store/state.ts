@@ -1,10 +1,7 @@
-import {Handler, RespondableRequestWithMetadata} from '../interface';
-
-export type HandlersState = Handler[];
+import {RespondableRequestWithMetadata} from '../interface';
 
 export type RequestsState = RespondableRequestWithMetadata[];
 
 export interface MokdState {
-  handlers: HandlersState;
   requests: RequestsState;
 }

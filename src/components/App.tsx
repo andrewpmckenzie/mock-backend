@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {Handler, RequestWithMetadata} from '../lib/interface';
+import {RequestWithMetadata} from '../lib/interface';
 
 export interface AppProps {
-  handlers: Handler[];
   requests: RequestWithMetadata[];
 }
 

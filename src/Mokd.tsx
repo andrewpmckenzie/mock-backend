@@ -3,24 +3,25 @@ import * as ReactDOM from 'react-dom';
 
 import {Provider} from 'react-redux';
 import {ConnectedApp} from './components/ConnectedApp';
+import {Engine} from './lib/engine/Engine';
 import {FetchInterceptor} from './lib/interceptors/FetchInterceptor';
 import {XHRInterceptor} from './lib/interceptors/XHRInterceptor';
-import {Handler, Interceptor, RespondableRequestWithMetadata} from './lib/interface';
-import {addHandlers, addRequest, mokdStore} from './lib/store';
+import {Handler, Interceptor} from './lib/interface';
+import {mokdStore} from './lib/store';
 
 export class Mokd {
   public static create(handlers: Handler[]): Mokd {
     return new Mokd(handlers).init();
   }
 
-  private requestIdCounter = 0;
+  private engine: Engine;
 
   constructor(
       handlers: Handler[] = [],
-      private interceptors: Interceptor[] = [new XHRInterceptor(), new FetchInterceptor()],
+      interceptors: Interceptor[] = [new XHRInterceptor(), new FetchInterceptor()],
       private fixtureElId = 'mokd',
   ) {
-    mokdStore.dispatch(addHandlers(handlers));
+    this.engine = new Engine(handlers, interceptors);
   }
 
   public init() {
@@ -30,17 +31,7 @@ export class Mokd {
       window.addEventListener('load', () => this.render());
     }
 
-    this.interceptors.forEach((interceptor) => {
-      interceptor.receivedRequest.subscribe((respondableRequest) => {
-        const requestWithMetadata: RespondableRequestWithMetadata = {
-          id: this.requestIdCounter++,
-          received: new Date(),
-          ...respondableRequest,
-        };
-        mokdStore.dispatch(addRequest(requestWithMetadata));
-      });
-      interceptor.start();
-    });
+    this.engine.start();
 
     return this;
   }
