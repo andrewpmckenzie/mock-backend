@@ -2,35 +2,61 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b1f33c0e-76f6-4e2e-be1d-8fb9a2142583" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/example/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Mokd.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/App.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/ConnectedApp.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/interceptors/AbstractInterceptor.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/interceptors/FetchInterceptor.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/interceptors/XHRInterceptor.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/interface/Handler.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/interface/Interceptor.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/interface/Request.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/interface/Response.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/interface/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/store/actions/handler.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/store/actions/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/store/actions/request.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/store/connect.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/store/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/store/reducers/handlers.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/store/reducers/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/store/reducers/requests.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/store/selectors/handlers.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/store/selectors/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/store/selectors/requests.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/store/state.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tslint.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/components/App.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/components/App.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/components/ConnectedApp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/components/ConnectedApp.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/index.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/interceptors/AbstractInterceptor.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/interceptors/AbstractInterceptor.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/interceptors/ConcreteInterceptor.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/interceptors/ConcreteInterceptor.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/interceptors/FetchInterceptor.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/interceptors/FetchInterceptor.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/interceptors/Interceptor.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/interceptors/Interceptor.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/interceptors/XHRInterceptor.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/interceptors/XHRInterceptor.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/interface/Handler.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/interface/Handler.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/interface/Interceptor.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/interface/Interceptor.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/interface/Request.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/interface/Request.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/interface/RespondableRequest.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/interface/RespondableRequest.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/interface/Response.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/interface/Response.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/interface/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/interface/index.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/store/actions/handler.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/store/actions/handler.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/store/actions/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/store/actions/index.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/store/actions/request.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/store/actions/request.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/store/connect.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/store/connect.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/store/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/store/index.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/store/reducers/handlers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/store/reducers/handlers.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/store/reducers/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/store/reducers/index.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/store/reducers/requests.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/store/reducers/requests.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/store/selectors/handlers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/store/selectors/handlers.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/store/selectors/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/store/selectors/index.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/store/selectors/requests.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/store/selectors/requests.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/store/state.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/lib/store/state.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/mokd.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/mokd.js.map" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -61,7 +87,7 @@
     <splitter split-orientation="horizontal" split-proportion="0.47758153">
       <split-first>
         <leaf>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/components/App.tsx">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="345">
@@ -69,6 +95,15 @@
                   <folding>
                     <element signature="e#0#31#0" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/.gitignore">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="46">
+                  <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
                 </state>
               </provider>
             </entry>
@@ -212,6 +247,7 @@
         <option value="$PROJECT_DIR$/src/components/ConnectedApp.tsx" />
         <option value="$PROJECT_DIR$/src/components/App.tsx" />
         <option value="$PROJECT_DIR$/example/index.html" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -253,25 +289,6 @@
               <item name="mokd" type="b2602c69:ProjectViewProjectNode" />
               <item name="mokd" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mokd" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mokd" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mokd" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mokd" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mokd" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mokd" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="interface" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -745,13 +762,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/App.tsx">
+    <entry file="file://$PROJECT_DIR$/example/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="601">
+          <caret line="84" column="17" selection-start-line="84" selection-start-column="17" selection-end-line="84" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -765,10 +779,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example/index.html">
+    <entry file="file://$PROJECT_DIR$/src/components/App.tsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="601">
-          <caret line="84" column="17" selection-start-line="84" selection-start-column="17" selection-end-line="84" selection-end-column="17" />
+        <state relative-caret-position="345">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
         </state>
       </provider>
     </entry>
