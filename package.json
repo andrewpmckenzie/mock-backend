@@ -1,0 +1,35 @@
+{
+  "name": "mokd-js",
+  "version": "0.0.1",
+  "author": "andrewpmckenzie",
+  "repository": "https://github.com/andrewpmckenzie/mokd.git",
+  "scripts": {
+    "build": "webpack --mode=production",
+    "start": "webpack-dev-server --mode=development"
+  },
+  "dependencies": {
+    "fetch-mock": "^6.5.2",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-redux": "^6.0.0",
+    "redux": "^4.0.1",
+    "reselect": "^4.0.0",
+    "rxjs": "^6.3.3",
+    "sinon": "^5.1.1"
+  },
+  "devDependencies": {
+    "@types/fetch-mock": "^6.0.4",
+    "@types/react": "^16.7.13",
+    "@types/react-dom": "^16.0.11",
+    "@types/react-redux": "^6.0.11",
+    "@types/redux": "^3.6.0",
+    "@types/sinon": "^5.0.7",
+    "awesome-typescript-loader": "^5.2.1",
+    "source-map-loader": "^0.2.4",
+    "tslint": "^5.11.0",
+    "typescript": "^3.2.2",
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
+  }
+}

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Mokd Example</title>
+  </head>
+  <body>
+
+    <!-- Setup mokd -->
+
+    <script src="/mokd.js"></script>
+    <script>
+      mokd([
+        { claim: () => true, handle: (r) => ({ status: 200, body: {OK: 'OK'} }) },
+        { claim: () => true, handle: (r) => ({ status: 500, body: {OK: 'NOT-OK'} }) }
+      ]);
+    </script>
+
+    <!-- Setup app -->
+
+    <script>
+      ((window) => {
+        let currentSubmitId = 0;
+
+        window.handleFormSubmit = function (e) {
+          e.preventDefault();
+
+          const resultContainer = document.getElementById('result');
+
+          const formData = new FormData(e.target);
+          const url = formData.get('url');
+          const doPost = !!formData.get('body').trim();
+          const body = formData.get('body') || undefined;
+          const api = formData.get('api');
+          const method = doPost ? 'POST' : 'GET';
+
+          const submitId = ++currentSubmitId;
+          const displayResponse = (status, body) => {
+            if (submitId !== currentSubmitId) {
+              return;
+            }
+
+            resultContainer.innerText = `
+Status: ${status}
+
+=== BODY ===
+${JSON.stringify(body, null, 2)}
+            `.trim();
+          };
+
+          switch (api) {
+            case 'fetch':
+              fetch(url, {method, body})
+                .then((r) => r.body.getReader().read().then((encodedBody) => {
+                  const body = new TextDecoder('utf-8').decode(encodedBody.value);
+                  displayResponse(r.status, body);
+                }));
+              break;
+            case 'xhr':
+              const request = new XMLHttpRequest();
+              request.addEventListener('load', ({target: {status, response}}) => displayResponse(status, response));
+              request.open(method, url);
+              request.send();
+              break;
+            default:
+              throw new Error(`Unknown API: ${api}`)
+          }
+
+          resultContainer.innerText = "Loading...";
+        }
+      })(this);
+    </script>
+
+    <div class="container">
+      <div>
+        <form onsubmit="handleFormSubmit(event)">
+          <div class="formComponent">
+            <b>API</b>
+            <label>
+              <input type="radio" name="api" value="fetch" />
+              Fetch
+            </label>
+            <label>
+              <input type="radio" name="api" value="xhr" checked />
+              XHR
+            </label>
+          </div>
+          <hr>
+          <input required type="text" placeholder="URL" name="url" value="/users/30" />
+          <hr>
+          <textarea placeholder="Request body (will POST if provided)" name="body" rows="10"></textarea>
+          <hr>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+
+      <code id="result">
+
+      </code>
+    </div>
+
+    <style>
+      .container {
+        display: flex;
+        justify-content: center;
+        padding-top: 24px;
+      }
+
+      #result {
+        border: solid 1px #aaa;
+        margin-left: 24px;
+        padding: 24px;
+        white-space: pre;
+        width: 400px;
+      }
+
+      form {
+        border: solid 1px #aaa;
+        display: flex;
+        flex-direction: column;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 12px;
+        width: 300px;
+      }
+
+      input,
+      textarea,
+      button,
+      .formComponent {
+        border: none 0 transparent;
+        font-size: 12px;
+        padding: 12px 24px;
+      }
+
+      hr {
+        border: 0 none transparent;
+        border-top: dotted 1px #aaa;
+        margin: 0;
+      }
+
+      textarea {
+        resize: none;
+      }
+
+      input:focus,
+      textarea:focus,
+      button:focus {
+        outline: none;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      button:active,
+      button:hover,
+      button:focus {
+        background-color: #eee;
+      }
+
+      label {
+        margin-left: 12px;
+      }
+    </style>
+
+  </body>
+</html>
