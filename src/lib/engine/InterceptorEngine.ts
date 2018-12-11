@@ -1,12 +1,15 @@
 import {Subscription} from 'rxjs';
 import {Interceptor, RespondableRequest, RespondableRequestWithMetadata} from '../interface';
-import {addRequest, mokdStore} from '../store';
+import {addRequest} from '../store';
+import {AbstractEngine} from './AbstractEngine';
 
-export class InterceptorEngine {
+export class InterceptorEngine extends AbstractEngine {
   private requestIdCounter = 0;
   private subscriptions: Subscription[] = [];
 
-  constructor(private interceptors: Interceptor[]) { }
+  constructor(private interceptors: Interceptor[]) {
+    super();
+  }
 
   public start() {
     this.interceptors.forEach((i) => this.decorateInterceptor(i));
@@ -30,6 +33,6 @@ export class InterceptorEngine {
       received: new Date(),
       ...respondableRequest,
     };
-    mokdStore.dispatch(addRequest(requestWithMetadata));
+    this.dispatchAction.next(addRequest(requestWithMetadata));
   }
 }

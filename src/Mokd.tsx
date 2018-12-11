@@ -2,12 +2,15 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import {Provider} from 'react-redux';
+import {Store} from 'redux';
 import {ConnectedApp} from './components/ConnectedApp';
-import {Engine} from './lib/engine/Engine';
 import {FetchInterceptor} from './lib/interceptors/FetchInterceptor';
 import {XHRInterceptor} from './lib/interceptors/XHRInterceptor';
 import {Handler, Interceptor} from './lib/interface';
-import {mokdStore} from './lib/store';
+import {initStore, MokdAction, MokdState} from './lib/store';
+import {Engine} from './lib/interface/Engine';
+import {AccumulatorEngine} from './lib/engine/AccumulatorEngine';
+import {InterceptorEngine} from './lib/engine/InterceptorEngine';
 
 export class Mokd {
   public static create(handlers: Handler[]): Mokd {
@@ -15,13 +18,17 @@ export class Mokd {
   }
 
   private engine: Engine;
+  private store: Store<MokdState, MokdAction>;
 
   constructor(
       handlers: Handler[] = [],
       interceptors: Interceptor[] = [new XHRInterceptor(), new FetchInterceptor()],
       private fixtureElId = 'mokd',
   ) {
-    this.engine = new Engine(handlers, interceptors);
+    this.engine = new AccumulatorEngine([
+        new InterceptorEngine(interceptors),
+    ]);
+    this.store = initStore(this.engine.actionEpic);
   }
 
   public init() {
@@ -48,6 +55,6 @@ export class Mokd {
   }
 
   private renderApp() {
-    return (<Provider store={mokdStore}><ConnectedApp /></Provider>);
+    return (<Provider store={this.store}><ConnectedApp /></Provider>);
   }
 }

@@ -4,6 +4,7 @@
     <meta charset="UTF-8"/>
     <title>Mokd Example</title>
   </head>
+
   <body>
 
     <!-- Setup mokd -->
@@ -40,12 +41,12 @@
               return;
             }
 
-            resultContainer.innerText = `
-Status: ${status}
-
-=== BODY ===
-${JSON.stringify(body, null, 2)}
-            `.trim();
+            resultContainer.innerText = [
+              `Status: ${status}`,
+              ``,
+              `=== BODY ===`,
+              `${JSON.stringify(body, null, 2)}`
+            ].join('\n');
           };
 
           switch (api) {
@@ -76,14 +77,8 @@ ${JSON.stringify(body, null, 2)}
         <form onsubmit="handleFormSubmit(event)">
           <div class="formComponent">
             <b>API</b>
-            <label>
-              <input type="radio" name="api" value="fetch" />
-              Fetch
-            </label>
-            <label>
-              <input type="radio" name="api" value="xhr" checked />
-              XHR
-            </label>
+            <label><input type="radio" name="api" value="fetch" /> Fetch</label>
+            <label><input type="radio" name="api" value="xhr" checked /> XHR</label>
           </div>
           <hr>
           <input required type="text" placeholder="URL" name="url" value="/users/30" />
@@ -95,7 +90,7 @@ ${JSON.stringify(body, null, 2)}
       </div>
 
       <code id="result">
-
+        Result will appear here.
       </code>
     </div>
 
@@ -123,10 +118,7 @@ ${JSON.stringify(body, null, 2)}
         width: 300px;
       }
 
-      input,
-      textarea,
-      button,
-      .formComponent {
+      input, textarea, button, .formComponent {
         border: none 0 transparent;
         font-size: 12px;
         padding: 12px 24px;
@@ -138,29 +130,12 @@ ${JSON.stringify(body, null, 2)}
         margin: 0;
       }
 
-      textarea {
-        resize: none;
-      }
+      textarea {resize: none;}
+      button {cursor: pointer;}
+      label {margin-left: 12px;}
 
-      input:focus,
-      textarea:focus,
-      button:focus {
-        outline: none;
-      }
-
-      button {
-        cursor: pointer;
-      }
-
-      button:active,
-      button:hover,
-      button:focus {
-        background-color: #eee;
-      }
-
-      label {
-        margin-left: 12px;
-      }
+      input:focus, textarea:focus, button:focus {outline: none;}
+      button:active, button:hover, button:focus {background-color: #eee;}
     </style>
 
   </body>
