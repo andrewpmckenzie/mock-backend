@@ -4,13 +4,14 @@ import * as ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {Store} from 'redux';
 import {ConnectedApp} from './components/ConnectedApp';
+import {AccumulatorEngine} from './lib/engine/AccumulatorEngine';
+import {RequestInterceptorEngine} from './lib/engine/RequestInterceptorEngine';
 import {FetchInterceptor} from './lib/interceptors/FetchInterceptor';
 import {XHRInterceptor} from './lib/interceptors/XHRInterceptor';
 import {Handler, Interceptor} from './lib/interface';
-import {initStore, MokdAction, MokdState} from './lib/store';
 import {Engine} from './lib/interface/Engine';
-import {AccumulatorEngine} from './lib/engine/AccumulatorEngine';
-import {InterceptorEngine} from './lib/engine/InterceptorEngine';
+import {initStore, MokdAction, MokdState} from './lib/store';
+import {RequestHandlerEngine} from './lib/engine/RequestHandlerEngine';
 
 export class Mokd {
   public static create(handlers: Handler[]): Mokd {
@@ -26,7 +27,8 @@ export class Mokd {
       private fixtureElId = 'mokd',
   ) {
     this.engine = new AccumulatorEngine([
-        new InterceptorEngine(interceptors),
+        new RequestInterceptorEngine(interceptors),
+        new RequestHandlerEngine(handlers),
     ]);
     this.store = initStore(this.engine.actionEpic);
   }

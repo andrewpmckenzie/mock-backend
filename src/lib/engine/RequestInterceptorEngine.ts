@@ -3,7 +3,7 @@ import {Interceptor, RespondableRequest, RespondableRequestWithMetadata} from '.
 import {addRequest} from '../store';
 import {AbstractEngine} from './AbstractEngine';
 
-export class InterceptorEngine extends AbstractEngine {
+export class RequestInterceptorEngine extends AbstractEngine {
   private requestIdCounter = 0;
   private subscriptions: Subscription[] = [];
 
@@ -11,11 +11,11 @@ export class InterceptorEngine extends AbstractEngine {
     super();
   }
 
-  public start() {
+  protected onStart() {
     this.interceptors.forEach((i) => this.decorateInterceptor(i));
   }
 
-  public stop() {
+  protected onStop() {
     this.interceptors.forEach((i) => i.stop());
     this.subscriptions.forEach((s) => s.unsubscribe());
     this.subscriptions = [];

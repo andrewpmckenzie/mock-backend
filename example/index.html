@@ -12,8 +12,16 @@
     <script src="/mokd.js"></script>
     <script>
       mokd([
-        { claim: () => true, handle: (r) => ({ status: 200, body: {OK: 'OK'} }) },
-        { claim: () => true, handle: (r) => ({ status: 500, body: {OK: 'NOT-OK'} }) }
+        {
+          id: 'user-handler',
+          claim: (r) => r.urlParts.path.startsWith('/users/'),
+          handle: (r) => ({ status: 200, body: {OK: 'OK'} })
+        },
+        {
+          id: 'error-handler',
+          claim: (r) => r.urlParts.path.startsWith('/error'),
+          handle: (r) => ({ status: 500, body: {OK: 'NOT-OK'} })
+        }
       ]);
     </script>
 

@@ -1,5 +1,6 @@
 import {Omit} from 'react-redux';
 import {Response} from './Response';
+import {Handler} from './Handler';
 
 export interface Request {
   body: string;
@@ -25,6 +26,10 @@ export interface RespondableRequest {
 export interface RespondableRequestWithMetadata extends RespondableRequest {
   id: number;
   received: Date;
+  msTillHandled?: number;
+  handlingPaused?: boolean;
+  handler?: Handler;
+  handleAt?: Date|null;
 }
 
 export type RequestWithMetadata = Omit<RespondableRequestWithMetadata, 'respond'>;

@@ -1,5 +1,5 @@
-import {AddRequestAction} from './request';
+import {RequestActions} from './request';
 
 export * from './request';
 
-export type MokdAction = AddRequestAction;
+export type MokdAction = RequestActions;

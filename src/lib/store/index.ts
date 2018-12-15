@@ -1,4 +1,4 @@
-import {applyMiddleware, createStore} from 'redux';
+import {applyMiddleware, compose, createStore} from 'redux';
 import {createEpicMiddleware, Epic} from 'redux-observable';
 import {MokdAction} from './actions';
 import {mokdReducer} from './reducers';
@@ -10,7 +10,8 @@ export * from './selectors';
 
 export function initStore(rootEpic: Epic<MokdAction, MokdAction>) {
   const epicMiddleware = createEpicMiddleware();
-  const store = createStore(mokdReducer, applyMiddleware(epicMiddleware));
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  const store = createStore(mokdReducer, composeEnhancers(applyMiddleware(epicMiddleware)));
   epicMiddleware.run(rootEpic);
   return store;
 }

@@ -5,11 +5,11 @@ export class AccumulatorEngine extends AbstractEngine {
     super(engines.map((e) => e.actionEpic));
   }
 
-  public start() {
+  protected onStart() {
     this.engines.forEach((e) => e.start());
   }
 
-  public stop() {
+  protected onStop() {
     this.engines.forEach((e) => e.stop());
   }
 }
