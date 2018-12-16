@@ -1,6 +1,6 @@
 import {createSelector} from 'reselect';
+import {RequestWithMetadata} from '../../interface';
 import {MokdState} from '../state';
-import {RequestWithMetadata, RespondFunctionWithId} from '../../interface';
 
 const isReadyForHandling = (r: RequestWithMetadata) => (
     r.handleAt &&
