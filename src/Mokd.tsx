@@ -4,18 +4,24 @@ import * as ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {Store} from 'redux';
 import {ConnectedApp} from './components/ConnectedApp';
+import {StyleBase} from './components/styles/StyleBase';
+import {StyledComponentsDemo} from './components/styles/StyledComponentsDemo';
 import {AccumulatorEngine} from './lib/engine/AccumulatorEngine';
+import {RequestHandlerEngine} from './lib/engine/RequestHandlerEngine';
 import {RequestInterceptorEngine} from './lib/engine/RequestInterceptorEngine';
 import {FetchInterceptor} from './lib/interceptors/FetchInterceptor';
 import {XHRInterceptor} from './lib/interceptors/XHRInterceptor';
 import {Handler, Interceptor} from './lib/interface';
 import {Engine} from './lib/interface/Engine';
 import {initStore, MokdAction, MokdState} from './lib/store';
-import {RequestHandlerEngine} from './lib/engine/RequestHandlerEngine';
 
 export class Mokd {
   public static create(handlers: Handler[]): Mokd {
     return new Mokd(handlers).init();
+  }
+
+  public static styleDemo(): Mokd {
+    return new Mokd([]).debugStyles();
   }
 
   private engine: Engine;
@@ -34,29 +40,48 @@ export class Mokd {
   }
 
   public init() {
-    if (document.readyState === 'complete') {
-      this.render();
-    } else {
-      window.addEventListener('load', () => this.render());
-    }
-
+    this.whenDocumentLoads(() => this.render());
     this.engine.start();
 
     return this;
   }
 
+  public debugStyles() {
+    this.whenDocumentLoads(() => this.renderStyleDemo());
+
+    return this;
+  }
+
+  private whenDocumentLoads(cb: () => void) {
+    if (document.readyState === 'complete') {
+      cb();
+    } else {
+      window.addEventListener('load', cb);
+    }
+  }
+
   private render() {
-    this.appendFixtureElement();
-    ReactDOM.render(this.renderApp(), document.getElementById(this.fixtureElId));
+    ReactDOM.render((
+        <StyleBase>
+          <Provider store={this.store}>
+            <ConnectedApp />
+          </Provider>
+        </StyleBase>
+    ), this.fixtureEl);
+  }
+
+  private renderStyleDemo() {
+    ReactDOM.render((<StyledComponentsDemo />), this.fixtureEl);
   }
 
   private appendFixtureElement() {
     const fixtureEl = document.createElement('div');
     fixtureEl.id = this.fixtureElId;
     document.body.appendChild(fixtureEl);
+    return fixtureEl;
   }
 
-  private renderApp() {
-    return (<Provider store={this.store}><ConnectedApp /></Provider>);
+  private get fixtureEl() {
+    return document.getElementById(this.fixtureElId) || this.appendFixtureElement();
   }
 }

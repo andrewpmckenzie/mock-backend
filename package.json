@@ -8,6 +8,7 @@
     "start": "webpack-dev-server --mode=development"
   },
   "dependencies": {
+    "@types/styled-components": "^4.1.4",
     "fetch-mock": "^6.5.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
@@ -16,7 +17,9 @@
     "redux-observable": "^1.0.0",
     "reselect": "^4.0.0",
     "rxjs": "^6.3.3",
-    "sinon": "^5.1.1"
+    "sinon": "^5.1.1",
+    "styled-components": "^4.1.2",
+    "styled-icons": "^5.5.0"
   },
   "devDependencies": {
     "@types/fetch-mock": "^6.0.4",
@@ -29,6 +32,7 @@
     "source-map-loader": "^0.2.4",
     "tslint": "^5.11.0",
     "typescript": "^3.2.2",
+    "typescript-plugin-styled-components": "^1.0.0",
     "webpack": "^4.27.1",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10"

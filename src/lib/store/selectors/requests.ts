@@ -5,8 +5,7 @@ import {RequestWithMetadata, RespondFunctionWithId} from '../../interface';
 const isReadyForHandling = (r: RequestWithMetadata) => (
     r.handleAt &&
     !r.handlingPaused &&
-    r.handleAt.getTime() <= Date.now() &&
-    r.msTillHandled === 0
+    r.percentProgress === 1
 );
 
 const getRequests = (state: MokdState) => state.requests;

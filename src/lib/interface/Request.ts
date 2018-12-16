@@ -26,7 +26,7 @@ export interface RespondableRequest {
 export interface RespondableRequestWithMetadata extends RespondableRequest {
   id: number;
   received: Date;
-  msTillHandled?: number;
+  percentProgress?: number;
   handlingPaused?: boolean;
   handler?: Handler;
   handleAt?: Date|null;

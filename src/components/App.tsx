@@ -1,5 +1,15 @@
 import * as React from 'react';
+import {SkipNext} from 'styled-icons/boxicons-regular';
+import {Pause, PlayArrow} from 'styled-icons/material';
 import {RequestWithMetadata} from '../lib/interface';
+import {
+  Progress,
+  RoundButton,
+  StatusContainer,
+  StatusList,
+  StatusListItem,
+  StatusListItemDetails,
+} from './styles/StyledComponents';
 
 export interface AppProps {
   requests: RequestWithMetadata[];
@@ -8,14 +18,22 @@ export interface AppProps {
 }
 
 export const App = ({requests, togglePause, handleNow}: AppProps) => (
-  <ul>
-    {requests.map((r) => (
-      <div key={r.id}>
-        {r.request.url}&nbsp;
-        ({r.handler ? r.handler.id : 'unhandled'} in {r.msTillHandled})&nbsp;
-        <button onClick={() => handleNow(r)}>NOW</button>&nbsp;
-        <button onClick={() => togglePause(r)}>{r.handlingPaused ? 'UNPAUSE' : 'PAUSE'}</button>
-      </div>
-    ))}
-  </ul>
+  <StatusContainer>
+    {
+      requests.length ?
+          <StatusList>
+            {requests.map((r) => (
+              <StatusListItem key={r.id}>
+                <StatusListItemDetails>{r.request.url}</StatusListItemDetails>
+                <Progress value={r.percentProgress} max={1} />
+                <RoundButton onClick={() => togglePause(r)}>
+                  {r.handlingPaused ? <PlayArrow /> : <Pause />}
+                </RoundButton>
+                <RoundButton onClick={() => handleNow(r)}><SkipNext /></RoundButton>
+              </StatusListItem>
+            ))}
+          </StatusList>
+          : null
+    }
+  </StatusContainer>
 );
