@@ -4,13 +4,13 @@ export const themeDefaults = {
   color: {
     accent: '#5C6BC0',
     background: '#FFF',
+    darkGrey: '#78909C',
+    error: '#C62828',
     extraLightGrey: '#ECEFF1',
     foreground: '#333',
-    primary: '#3949AB',
     lightGrey: '#CFD8DC',
-    darkGrey: '#78909C',
+    primary: '#3949AB',
     success: '#689F38',
-    error: '#C62828',
     warn: '#FFB300',
   },
 
@@ -81,5 +81,5 @@ export const statusPosition = (location: keyof StatusPositionOffset) => statusLi
     case 'TL': return {top: offset, left: offset, bottom: 'inherit', right: 'inherit'}[location];
     case 'BR': return {bottom: offset, right: offset, top: 'inherit', left: 'inherit'}[location];
     case 'BL': return {bottom: offset, left: offset, top: 'inherit', right: 'inherit'}[location];
-  };
+  }
 });

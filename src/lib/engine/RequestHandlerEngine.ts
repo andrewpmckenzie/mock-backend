@@ -33,11 +33,11 @@ export class RequestHandlerEngine extends AbstractEngine {
   }
 
   protected onStart(): void {
-
+    // no-op
   }
 
   protected onStop(): void {
-
+    // no-op
   }
 
   private tickEpic(

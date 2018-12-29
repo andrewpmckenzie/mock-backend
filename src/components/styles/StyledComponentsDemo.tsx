@@ -1,15 +1,15 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {
-  reset,
-  StatusContainer,
-  StatusList,
-  StatusListItem,
-  RoundButton, StatusListItemDetails,
-  Progress
-} from './StyledComponents';
-import {StyleBase} from './StyleBase';
 import {Pause, Stop} from 'styled-icons/material';
+import {StyleBase} from './StyleBase';
+import {
+  Progress,
+  reset,
+  RoundButton,
+  StatusContainer,
+  StatusList, StatusListItem,
+  StatusListItemDetails,
+} from './StyledComponents';
 
 const DemoContainer = styled.div`
   ${reset}
@@ -103,7 +103,6 @@ export class StyledComponentsDemo extends React.Component<{},
               </StatusListItem>
             </StatusList>
           </DemoSection>
-
 
         </DemoContainer>
       </StyleBase>

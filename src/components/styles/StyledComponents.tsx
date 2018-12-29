@@ -3,13 +3,19 @@ import styled from 'styled-components';
 import {
   backgroundColor,
   button,
-  color, darkGreyColor,
-  defaultPadding, foregroundColor, horizontalBigPadding, horizontalSmallPadding,
+  color,
+  darkGreyColor,
+  defaultPadding,
+  foregroundColor,
+  horizontalBigPadding,
+  horizontalSmallPadding,
   lightGreyColor,
   padding,
   primaryColor,
   roundButtonSize,
-  statusList, statusPosition, verticalSmallPadding
+  statusList,
+  statusPosition,
+  verticalSmallPadding,
 } from '../../theme';
 
 const ROUND_BORDER = '500px';

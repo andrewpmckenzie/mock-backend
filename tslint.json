@@ -4,6 +4,7 @@
     "quotemark": [true, "single"],
     "interface-name": [true, "never-prefix"],
     "no-empty-interface": false,
-    "no-shadowed-variable": false
+    "no-shadowed-variable": false,
+    "no-console": false
   }
 }

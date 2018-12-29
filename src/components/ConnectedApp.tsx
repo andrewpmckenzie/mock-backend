@@ -1,7 +1,7 @@
+import {Dispatch} from 'react';
 import {RequestWithMetadata} from '../lib/interface';
 import {connect, getRequestsWithoutRespondFunctions, handleNow, MockBackendAction, pause, unpause} from '../lib/store';
 import {App, AppProps} from './App';
-import {Dispatch} from 'react';
 
 export const ConnectedApp = connect<
     AppProps,

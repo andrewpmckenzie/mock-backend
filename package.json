@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack --mode=production",
     "start": "webpack-dev-server --mode=development",
-    "test": "karma start"
+    "test": "karma start",
+    "lint": "tslint --project `pwd`"
   },
   "dependencies": {
     "@types/styled-components": "^4.1.4",

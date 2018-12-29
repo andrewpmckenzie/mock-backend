@@ -1,6 +1,6 @@
 import {Omit} from 'react-redux';
-import {Response} from './Response';
 import {Handler} from './Handler';
+import {Response} from './Response';
 
 export interface Request {
   body: string;
