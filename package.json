@@ -9,6 +9,7 @@
     "test": "karma start",
     "lint": "tslint --project `pwd`"
   },
+  "pre-commit": ["lint"],
   "dependencies": {
     "@types/styled-components": "^4.1.4",
     "fetch-mock": "^6.5.2",
@@ -39,6 +40,7 @@
     "karma-jasmine": "^2.0.1",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^3.0.5",
+    "pre-commit": "^1.2.2",
     "source-map-loader": "^0.2.4",
     "tslint": "^5.11.0",
     "typescript": "^3.2.2",
