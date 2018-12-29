@@ -10,7 +10,9 @@ export class FetchInterceptor extends AbstractInterceptor {
       return;
     }
 
-    mock('*', (url, {method, body, headers}) => new Promise((resolve) => {
+    mock('*', (url, {
+      method = 'GET', body = '', headers = {},
+    } = {}) => new Promise((resolve) => {
       const normalizedBody = typeof body === 'string' ? body : JSON.stringify(body);
       // TODO: extract fetch headers
       const normalizedHeaders = {};
