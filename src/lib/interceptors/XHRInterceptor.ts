@@ -23,7 +23,7 @@ export class XHRInterceptor extends AbstractInterceptor {
     this.xhr = null;
   }
 
-  private handleFakeXHR(xhr: sinon.SinonFakeXMLHttpRequest & XMLHttpRequest) {
+  private handleFakeXHR(xhr: sinon.SinonFakeXMLHttpRequest & XMLHttpRequest & {onSend?: () => void}) {
     const handler = () => {
       if (xhr.readyState !== XMLHttpRequest.OPENED) {
         return;
@@ -47,6 +47,12 @@ export class XHRInterceptor extends AbstractInterceptor {
       });
     };
 
-    xhr.addEventListener('readystatechange', handler);
+    // Workaround for bug in sinon's fakeXHR where it sets xhr.readyState = FakeXMLHttpRequest.OPENED instead of
+    // xhr.readyState = FakeXMLHttpRequest.HEADERS_RECEIVED
+    const existingOnSend = xhr.onSend ? xhr.onSend : () => null;
+    xhr.onSend = () => {
+      existingOnSend();
+      handler();
+    };
   }
 }
