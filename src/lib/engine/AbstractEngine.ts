@@ -2,16 +2,16 @@ import {Epic} from 'redux-observable';
 import {merge, Subject} from 'rxjs';
 import {filter} from 'rxjs/operators';
 import {Engine} from '../interface/Engine';
-import {MokdAction} from '../store/actions';
+import {MockBackendAction} from '../store/actions';
 
 export abstract class AbstractEngine implements Engine {
-  public actionEpic: Epic<MokdAction, MokdAction>;
+  public actionEpic: Epic<MockBackendAction, MockBackendAction>;
 
-  protected dispatchAction = new Subject<MokdAction>();
+  protected dispatchAction = new Subject<MockBackendAction>();
 
   private isRunningMutable = false;
 
-  constructor(epics: Array<Epic<MokdAction, MokdAction>> = []) {
+  constructor(epics: Array<Epic<MockBackendAction, MockBackendAction>> = []) {
     // TODO: only emit when started
     this.actionEpic = (action$, state$) => merge(
         ...epics.map((e) => e.bind(this)(action$.pipe(filter(() => this.isRunningMutable)), state$)),

@@ -1,8 +1,8 @@
 import {Epic} from 'redux-observable';
-import {MokdAction} from '../store/actions';
+import {MockBackendAction} from '../store/actions';
 
 export interface Engine {
-  actionEpic: Epic<MokdAction, MokdAction>;
+  actionEpic: Epic<MockBackendAction, MockBackendAction>;
   start(): void;
   stop(): void;
 }

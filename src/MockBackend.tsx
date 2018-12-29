@@ -13,27 +13,27 @@ import {FetchInterceptor} from './lib/interceptors/FetchInterceptor';
 import {XHRInterceptor} from './lib/interceptors/XHRInterceptor';
 import {Handler, Interceptor} from './lib/interface';
 import {Engine} from './lib/interface/Engine';
-import {initStore, MokdAction, MokdState} from './lib/store';
+import {initStore, MockBackendAction, MockBackendState} from './lib/store';
 
-export class Mokd {
+export class MockBackend {
   public static create(handlers: Handler[], {
-    fixtureElementId = 'mokd',
+    fixtureElementId = 'mock-backend',
     interceptors = [new XHRInterceptor(), new FetchInterceptor()],
-  } = {}): Mokd {
-    return new Mokd(handlers, interceptors, fixtureElementId).init();
+  } = {}): MockBackend {
+    return new MockBackend(handlers, interceptors, fixtureElementId).init();
   }
 
-  public static styleDemo(opt: {fixtureElId?: string} = {}): Mokd {
-    return new Mokd([], [], opt.fixtureElId).debugStyles();
+  public static styleDemo({fixtureElementId = 'mock-backend'} = {}): MockBackend {
+    return new MockBackend([], [], fixtureElementId).debugStyles();
   }
 
   private engine: Engine;
-  private store: Store<MokdState, MokdAction>;
+  private store: Store<MockBackendState, MockBackendAction>;
 
   constructor(
       handlers: Handler[],
       interceptors: Interceptor[],
-      private fixtureElId = 'mokd',
+      private fixtureElId: string,
   ) {
     this.engine = new AccumulatorEngine([
         new RequestInterceptorEngine(interceptors),

@@ -5,9 +5,9 @@ import {
   assignHandler, getRequestsReadyForHandling,
   getRequestsWithoutHandlers,
   getTickingRequests, handled,
-  MokdState, tick,
+  MockBackendState, tick,
 } from '../store';
-import {MokdAction} from '../store/actions';
+import {MockBackendAction} from '../store/actions';
 import {AbstractEngine} from './AbstractEngine';
 
 export const DEFAULT_HANDLER: Handler = {
@@ -41,9 +41,9 @@ export class RequestHandlerEngine extends AbstractEngine {
   }
 
   private tickEpic(
-      $action: Observable<MokdAction>,
-      $store: Observable<MokdState>,
-  ): Observable<MokdAction> {
+      $action: Observable<MockBackendAction>,
+      $store: Observable<MockBackendState>,
+  ): Observable<MockBackendAction> {
     const {TICK_RATE_MS} = RequestHandlerEngine;
     return timer(TICK_RATE_MS, TICK_RATE_MS).pipe(
       filter(() => this.isRunning),
@@ -54,9 +54,9 @@ export class RequestHandlerEngine extends AbstractEngine {
   }
 
   private assignHandlerEpic(
-      $action: Observable<MokdAction>,
-      $store: Observable<MokdState>,
-  ): Observable<MokdAction> {
+      $action: Observable<MockBackendAction>,
+      $store: Observable<MockBackendState>,
+  ): Observable<MockBackendAction> {
     return $store.pipe(
         map(getRequestsWithoutHandlers),
         filter((requests) => requests.length > 0),
@@ -65,9 +65,9 @@ export class RequestHandlerEngine extends AbstractEngine {
   }
 
   private handleEpic(
-      $action: Observable<MokdAction>,
-      $store: Observable<MokdState>,
-  ): Observable<MokdAction> {
+      $action: Observable<MockBackendAction>,
+      $store: Observable<MockBackendState>,
+  ): Observable<MockBackendAction> {
     return $store.pipe(
         map(getRequestsReadyForHandling),
         flatMap((requests) => requests.map(({handler, request, respond, id}) => {

@@ -1,2 +1,3 @@
-# mokd
-Mocked endpoints in the browser
+# Mock Backend
+
+... under development ...

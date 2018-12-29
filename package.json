@@ -1,8 +1,8 @@
 {
-  "name": "mokd-js",
+  "name": "mock-backend",
   "version": "0.0.1",
   "author": "andrewpmckenzie",
-  "repository": "https://github.com/andrewpmckenzie/mokd.git",
+  "repository": "https://github.com/andrewpmckenzie/mock-backend.git",
   "scripts": {
     "build": "webpack --mode=production",
     "start": "webpack-dev-server --mode=development",

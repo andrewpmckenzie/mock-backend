@@ -75,7 +75,7 @@ export class StyledComponentsDemo extends React.Component<{},
     return (
       <StyleBase>
         <DemoContainer>
-          <DemoTitle>Mokd component styles</DemoTitle>
+          <DemoTitle>MockBackend component styles</DemoTitle>
 
           <DemoSection>
             <DemoButton onClick={() => this.setState({showStatusContainer: !showStatusContainer})}>

@@ -6,7 +6,7 @@ module.exports = {
     entry: './src/index.ts',
 
     output: {
-        filename: 'mokd.js',
+        filename: 'mock-backend.js',
         path: path.join(__dirname, '/dist')
     },
 

@@ -2,6 +2,6 @@ import {RespondableRequestWithMetadata} from '../interface';
 
 export type RequestsState = RespondableRequestWithMetadata[];
 
-export interface MokdState {
+export interface MockBackendState {
   requests: RequestsState;
 }

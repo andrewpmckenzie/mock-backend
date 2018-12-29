@@ -1,9 +1,9 @@
 import {Handler, Request} from '../src/lib/interface';
-import {Mokd} from '../src/Mokd';
+import {MockBackend} from '../src/MockBackend';
 import {async} from './helpers/async';
 import {xhr} from './helpers/xhr';
 
-const FIXTURE_ID = 'test_mokd';
+const FIXTURE_ID = 'test_mock_backend';
 
 // Delay before the response is returned
 const RESPONSE_DELAY_MS = 5000;
@@ -12,7 +12,7 @@ const RESPONSE_DELAY_MS = 5000;
 const POLLING_MS = 500;
 
 describe('E2E', () => {
-  let mokd: Mokd;
+  let mockBackend: MockBackend;
   let handlers: Handler[];
   let containerEl: HTMLElement;
 
@@ -32,13 +32,13 @@ describe('E2E', () => {
       },
     ];
 
-    mokd = Mokd.create(handlers, {fixtureElementId: FIXTURE_ID});
+    mockBackend = MockBackend.create(handlers, {fixtureElementId: FIXTURE_ID});
     containerEl = document.getElementById(FIXTURE_ID)!;
   });
 
   afterEach(() => {
-    if (mokd) {
-      mokd.destroy();
+    if (mockBackend) {
+      mockBackend.destroy();
     }
   });
 

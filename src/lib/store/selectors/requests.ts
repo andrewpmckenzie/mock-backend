@@ -1,6 +1,6 @@
 import {createSelector} from 'reselect';
 import {RequestWithMetadata} from '../../interface';
-import {MokdState} from '../state';
+import {MockBackendState} from '../state';
 
 const isReadyForHandling = (r: RequestWithMetadata) => (
     r.handleAt &&
@@ -8,7 +8,7 @@ const isReadyForHandling = (r: RequestWithMetadata) => (
     r.percentProgress === 1
 );
 
-const getRequests = (state: MokdState) => state.requests;
+const getRequests = (state: MockBackendState) => state.requests;
 
 // we exclude the response functions to make it clear that they shouldn't be
 // executed directly (instead, use the RespondToRequest action).

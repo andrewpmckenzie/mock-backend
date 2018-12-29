@@ -2,16 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8"/>
-    <title>Mokd Example</title>
+    <title>MockBackend Example</title>
   </head>
 
   <body>
 
-    <!-- Setup mokd -->
+    <!-- Setup mockBackend -->
 
-    <script src="/mokd.js"></script>
+    <script src="/mock-backend.js"></script>
     <script>
-      mokd([
+      mockBackend([
         {
           id: 'user-handler',
           claim: (r) => r.urlParts.path.startsWith('/users/'),

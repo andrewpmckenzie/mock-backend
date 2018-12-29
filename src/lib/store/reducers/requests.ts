@@ -1,6 +1,6 @@
 import {Reducer} from 'redux';
 import {RespondableRequestWithMetadata} from '../../interface';
-import {MokdAction} from '../actions';
+import {MockBackendAction} from '../actions';
 import {RequestsState} from '../state';
 
 const DEFAULT_DELAY = 5000;
@@ -34,7 +34,7 @@ function tick(request: RespondableRequestWithMetadata): RespondableRequestWithMe
   return {...request, handleAt, percentProgress};
 }
 
-export const requestsReducer: Reducer<RequestsState, MokdAction> = (state = [], action) => {
+export const requestsReducer: Reducer<RequestsState, MockBackendAction> = (state = [], action) => {
   switch (action.type) {
     case 'REQUEST::ADD_REQUEST':
       return [...state, action.respondableRequest];
