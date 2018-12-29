@@ -7,11 +7,16 @@
     "build": "webpack --mode=production",
     "start": "webpack-dev-server --mode=development",
     "test": "karma start",
-    "lint": "tslint --project `pwd`"
+    "lint": "tslint --project `pwd`",
+    "lint-staged": "lint-staged"
   },
-  "pre-commit": ["lint"],
+  "pre-commit": [
+    "lint-staged"
+  ],
+  "lint-staged": {
+    "*.{ts, tsx, js, jsx}": ["tslint --fix", "git add"]
+  },
   "dependencies": {
-    "@types/styled-components": "^4.1.4",
     "fetch-mock": "^6.5.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
@@ -32,6 +37,7 @@
     "@types/react-redux": "^6.0.11",
     "@types/redux": "^3.6.0",
     "@types/sinon": "^5.0.7",
+    "@types/styled-components": "^4.1.4",
     "awesome-typescript-loader": "^5.2.1",
     "jasmine": "^3.3.1",
     "jasmine-core": "^3.3.0",
@@ -40,6 +46,7 @@
     "karma-jasmine": "^2.0.1",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^3.0.5",
+    "lint-staged": "^8.1.0",
     "pre-commit": "^1.2.2",
     "source-map-loader": "^0.2.4",
     "tslint": "^5.11.0",
