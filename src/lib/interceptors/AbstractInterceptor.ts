@@ -33,7 +33,7 @@ export abstract class AbstractInterceptor implements Interceptor {
     a.href = url;
 
     const query = new Map<string, string|string[]>();
-    a.search.split('&').forEach((segment) => {
+    a.search.replace(/^\?/, '').split('&').forEach((segment) => {
       const [k, v] = segment.split('=');
       const key = decodeURIComponent(k);
       const value = decodeURIComponent(v || '');
