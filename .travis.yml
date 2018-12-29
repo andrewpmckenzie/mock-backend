@@ -1,4 +1,12 @@
 language: node_js
 node_js:
-  - "node"
-  - "8"
+- node
+- '8'
+deploy:
+  provider: npm
+  email: andrewpmckenzie@gmail.com
+  api_key:
+    secure: rdc/OMzEy79SwNmw0mM64bFA/9qElMadanDOlmGrjZzzJMsQD0mG9lWgG8OBj5S2y5pmFwq6AKMz5pYvWOGIn7My49VUMkoQl6amWQYReqpMn7Czk/ZROfFTFuMnbt3VilqNlYrn3Kiz7asw91u9DvYhmJd+ESsxDGeSqNiqT/JJFNhuP7uSZ64oOg0uyfW19/GOMcTxzd/fc5HkRDbbOEwUElNY16zAqLqg8qws/OeeDdoo+WDhYv5rYkmbE3nicjz7fKcIl+0B2R8ZVyu4alSUHoIqXPNcZpjN8LZVs4rqC+Kf8VI/6f9VItJMHRG5oiPV3pCIXq8p1luZow25GHEwd/8kkPlZ5+QFt303TxCzWNjrJn8jsrQU7BSzH2ka2vasktDHZ1VNE7ll048GA3eWBJ+z30fIWVazxuc6qidfpWrPM2YrRLNl0O0puZPzEDd19XYuUL+Tfq66+ICF3sEi0WHMX9FTXEKEsDyZcqdoXaz7b2wQXyQuQEm99QGRd1tumCayjjXKUzqY47T/c+vVtFtYPvxa3fh0zt/zWAJeV2Cvbq1VOG5rnNdMbBiylscJdjGldqATLPUotxgX8tIvvdI15+8n3DYBvQ38PJDd0x86gAPOWIu7+p17j0ag6RaBW7b98dxR0eIKtP7B6m7V/GA4ROtUoJqX+yrToJc=
+  on:
+    tags: true
+    repo: andrewpmckenzie/mock-backend
