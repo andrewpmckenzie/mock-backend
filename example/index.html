@@ -69,7 +69,7 @@
               const request = new XMLHttpRequest();
               request.addEventListener('load', ({target: {status, response}}) => displayResponse(status, response));
               request.open(method, url);
-              request.send();
+              request.send(body);
               break;
             default:
               throw new Error(`Unknown API: ${api}`)
