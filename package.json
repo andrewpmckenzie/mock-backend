@@ -7,7 +7,7 @@
     "build": "webpack --mode=production",
     "start": "webpack-dev-server --mode=development",
     "test": "karma start",
-    "lint": "tslint --project `pwd`",
+    "lint-project": "tslint --project `pwd`",
     "lint-staged": "lint-staged"
   },
   "pre-commit": [
