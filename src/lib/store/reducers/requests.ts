@@ -28,8 +28,9 @@ function tick(request: RespondableRequestWithMetadata): RespondableRequestWithMe
   }
 
   const handleAt = request.handleAt || new Date(request.received.getTime() + DEFAULT_DELAY);
+  const pauseAdjustedReceivedTime = request.received.getTime() + (request.pauseTimeMs || 0);
   const percentProgress = Math.min(1,
-      (Date.now() - request.received.getTime()) / (handleAt.getTime() - request.received.getTime()));
+      (Date.now() - pauseAdjustedReceivedTime) / (handleAt.getTime() - pauseAdjustedReceivedTime));
   return {...request, handleAt, percentProgress};
 }
 
@@ -52,13 +53,20 @@ export const requestsReducer: Reducer<RequestsState, MokdAction> = (state = [], 
       return updateRequest(state, action.requestId, (r) => ({...r, percentProgress: 0, handleAt: new Date()}));
 
     case 'REQUEST::PAUSE':
-      return updateRequest(state, action.requestId, (r) => ({...r, handlingPaused: true, handleAt: null}));
+      return updateRequest(state, action.requestId, (r) => ({
+        ...r,
+        handleAt: null,
+        handlingPaused: true,
+        pausedSince: new Date(),
+      }));
 
     case 'REQUEST::UNPAUSE':
       return updateRequest(state, action.requestId, (r) => ({
         ...r,
         handleAt: new Date(Date.now() + ((1 - (r.percentProgress || 0)) * DEFAULT_DELAY)),
         handlingPaused: false,
+        pauseTimeMs: r.pausedSince ? (r.pauseTimeMs || 0) + Date.now() - r.pausedSince.getTime() : r.pauseTimeMs,
+        pausedSince: null,
       }));
 
     default:
