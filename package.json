@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --mode=production --devtool= ",
     "start": "webpack-dev-server --mode=development",
-    "test": "npm run test-e2e-once && npm run test-screendiff",
+    "test": "npm run test-e2e-once",
     "test-e2e-once": "karma start --single-run",
     "test-e2e": "karma start",
     "test-screendiff": "npm run-script build && npm run test-screendiff-nobuild",
