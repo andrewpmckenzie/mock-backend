@@ -66,7 +66,10 @@ export class StyledComponentsDemo extends React.Component<{},
   constructor(props: Readonly<{}>) {
     super(props);
 
-    this.state = {showPopup: false, showStatusContainer: false};
+    this.state = {
+      showPopup: window.location.hash === '#Popup',
+      showStatusContainer: window.location.hash === '#StatusContainer',
+    };
   }
 
   public render() {
@@ -77,19 +80,22 @@ export class StyledComponentsDemo extends React.Component<{},
         <DemoContainer>
           <DemoTitle>MockBackend component styles</DemoTitle>
 
-          <DemoSection>
-            <DemoButton onClick={() => this.setState({showStatusContainer: !showStatusContainer})}>
+          <DemoSection id='StatusContainer'>
+            <DemoButton className='StyledComponentsDemo_toggleStatusContainer'
+                        onClick={() => this.setState({showStatusContainer: !showStatusContainer})}>
               {showStatusContainer ? 'Hide' : 'Show'} status container
             </DemoButton>
             {
               showStatusContainer ?
-                  <StatusContainer><DemoHighlight>Status Container</DemoHighlight></StatusContainer> :
+                  <StatusContainer className='StyledComponentsDemo_StatusContainer'>
+                    <DemoHighlight>Status Container</DemoHighlight>
+                  </StatusContainer> :
                   null
             }
           </DemoSection>
 
           <DemoHeader>StatusList + StatusListItem</DemoHeader>
-          <DemoSection>
+          <DemoSection id='StatusList'>
             <StatusList>
               <StatusListItem>
                 <StatusListItemDetails>List item one</StatusListItemDetails>

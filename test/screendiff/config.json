@@ -1,0 +1,41 @@
+{
+  "viewports": [
+    {
+      "label": "desktop",
+      "width": 1900,
+      "height": 1900
+    }
+  ],
+  "scenarios": [
+    {
+      "label": "Styles demo page",
+      "url": "./example/styles.html",
+      "delay": 100,
+      "selectors": ["#StatusList"],
+      "scrollToSelector": true
+    },
+    {
+      "label": "Status container",
+      "url": "./example/styles.html#StatusContainer",
+      "delay": 100,
+      "hideSelectors": ["[class^=DemoSection]:not(#StatusContainer)", "[class^=DemoHeader]"],
+      "scrollToSelector": true
+    }
+  ],
+  "paths": {
+    "bitmaps_reference": "test/screendiff/reference",
+    "bitmaps_test": "test_run/screen_test",
+    "engine_scripts": "test/screendiff/scripts",
+    "html_report": "test_run/screen_html_report",
+    "ci_report": "test_run/screen_ci_report"
+  },
+  "report": ["CI"],
+  "engine": "puppeteer",
+  "engineOptions": {
+    "args": ["--no-sandbox"]
+  },
+  "asyncCaptureLimit": 5,
+  "asyncCompareLimit": 50,
+  "debug": false,
+  "debugWindow": false
+}

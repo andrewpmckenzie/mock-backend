@@ -1,4 +1,8 @@
+# OS / IDE
 .DS_Store
+.idea
+
+# Artifacts
 dist
 node_modules
-.idea
+test_run
