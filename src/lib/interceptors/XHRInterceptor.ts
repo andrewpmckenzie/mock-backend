@@ -1,16 +1,16 @@
-import * as sinon from 'sinon';
+import {fakeXhr, FakeXMLHttpRequest, FakeXMLHttpRequestStatic} from 'nise';
 import {Request, Response} from '../interface';
 import {AbstractInterceptor} from './AbstractInterceptor';
 
 export class XHRInterceptor extends AbstractInterceptor {
-  private xhr: sinon.SinonFakeXMLHttpRequestStatic|null = null;
+  private xhr: FakeXMLHttpRequestStatic|null = null;
 
   public start() {
     if (this.xhr) {
       return;
     }
 
-    this.xhr = sinon.useFakeXMLHttpRequest();
+    this.xhr = fakeXhr.useFakeXMLHttpRequest();
     this.xhr.onCreate = this.handleFakeXHR.bind(this);
   }
 
@@ -23,7 +23,7 @@ export class XHRInterceptor extends AbstractInterceptor {
     this.xhr = null;
   }
 
-  private handleFakeXHR(xhr: sinon.SinonFakeXMLHttpRequest & XMLHttpRequest & {onSend?: () => void}) {
+  private handleFakeXHR(xhr: FakeXMLHttpRequest & XMLHttpRequest & {onSend?: () => void}) {
     const handler = () => {
       if (xhr.readyState !== XMLHttpRequest.OPENED) {
         return;

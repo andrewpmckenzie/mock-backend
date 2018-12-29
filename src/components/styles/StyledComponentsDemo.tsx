@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {Pause, Stop} from 'styled-icons/material';
+import {Pause} from 'styled-icons/material/Pause';
+import {Stop} from 'styled-icons/material/Stop';
 import {StyleBase} from './StyleBase';
 import {
   Progress,

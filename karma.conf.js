@@ -6,12 +6,15 @@ module.exports = (config) => {
     preprocessors: {
       'test/*_test.ts': ['webpack', 'sourcemap'],
     },
-    webpack: Object.assign({}, require('./webpack.config'), {
-      mode: 'development',
-      entry: null,
-      output: null,
-      devtool: 'inline-source-maps'
-    }),
+    webpack: Object.assign({},
+      require('./webpack.config')({}, {mode: 'production'}),
+      {
+        mode: 'development',
+        entry: null,
+        output: null,
+        devtool: 'inline-source-maps'
+      }
+    ),
     webpackMiddleware: {
       noInfo: true,
       stats: {chunks: false}

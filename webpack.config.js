@@ -1,8 +1,8 @@
 const path = require('path');
-const createStyledComponentsTransformer = require('typescript-plugin-styled-components').default;
-const styledComponentsTransformer = createStyledComponentsTransformer();
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-module.exports = {
+module.exports = (env, {mode}) => ({
     entry: './src/index.ts',
 
     output: {
@@ -10,7 +10,7 @@ module.exports = {
         path: path.join(__dirname, '/dist')
     },
 
-    devtool: 'source-map',
+    devtool: mode === 'development' ? 'source-map' : null,
 
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.json']
@@ -20,21 +20,33 @@ module.exports = {
         rules: [
             {
               test: /\.tsx?$/,
-              loader: 'awesome-typescript-loader',
+              loader: 'ts-loader',
               options: {
-                getCustomTransformers: () => ({ before: [styledComponentsTransformer] })
+                transpileOnly: true,
+                happyPackMode: true,
+                experimentalWatchApi: true,
               }
             },
-            { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' }
+            ... mode === 'development' ? [{
+              enforce: 'pre',
+              test: /\.js$/,
+              loader: 'source-map-loader'
+            }] : [],
         ]
     },
 
-    devServer: {
-        contentBase: [
-          path.join(__dirname, 'example'),
-          path.join(__dirname, 'dist')
-        ],
-        compress: true,
-        port: 9000
-    }
-};
+  plugins: [
+    new ForkTsCheckerWebpackPlugin(),
+
+    // Uncomment to debug bundle size
+    //new BundleAnalyzerPlugin(),
+  ],
+
+  devServer: {
+      contentBase: [__dirname],
+      open: true,
+      openPage: 'example/index.html',
+      compress: true,
+      port: 9000
+  }
+});

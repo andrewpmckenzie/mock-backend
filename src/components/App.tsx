@@ -1,6 +1,7 @@
 import * as React from 'react';
-import {SkipNext} from 'styled-icons/boxicons-regular';
-import {Pause, PlayArrow} from 'styled-icons/material';
+import {SkipNext} from 'styled-icons/boxicons-regular/SkipNext';
+import {Pause} from 'styled-icons/material/Pause';
+import {PlayArrow} from 'styled-icons/material/PlayArrow';
 import {RequestWithMetadata} from '../lib/interface';
 import {
   Progress,
