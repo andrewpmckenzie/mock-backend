@@ -16,20 +16,23 @@ import {Engine} from './lib/interface/Engine';
 import {initStore, MokdAction, MokdState} from './lib/store';
 
 export class Mokd {
-  public static create(handlers: Handler[]): Mokd {
-    return new Mokd(handlers).init();
+  public static create(handlers: Handler[], {
+    fixtureElementId = 'mokd',
+    interceptors = [new XHRInterceptor(), new FetchInterceptor()],
+  } = {}): Mokd {
+    return new Mokd(handlers, interceptors, fixtureElementId).init();
   }
 
-  public static styleDemo(): Mokd {
-    return new Mokd([]).debugStyles();
+  public static styleDemo(opt: {fixtureElId?: string} = {}): Mokd {
+    return new Mokd([], [], opt.fixtureElId).debugStyles();
   }
 
   private engine: Engine;
   private store: Store<MokdState, MokdAction>;
 
   constructor(
-      handlers: Handler[] = [],
-      interceptors: Interceptor[] = [new XHRInterceptor(), new FetchInterceptor()],
+      handlers: Handler[],
+      interceptors: Interceptor[],
       private fixtureElId = 'mokd',
   ) {
     this.engine = new AccumulatorEngine([
@@ -50,6 +53,11 @@ export class Mokd {
     this.whenDocumentLoads(() => this.renderStyleDemo());
 
     return this;
+  }
+
+  public destroy() {
+    this.engine.stop();
+    this.fixtureEl.remove();
   }
 
   private whenDocumentLoads(cb: () => void) {
