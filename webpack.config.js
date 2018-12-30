@@ -10,7 +10,7 @@ module.exports = (env, {mode}) => ({
         path: path.join(__dirname, '/dist')
     },
 
-    devtool: mode === 'development' ? 'source-map' : null,
+    devtool: mode === 'development' ? 'source-map' : false,
 
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.json']

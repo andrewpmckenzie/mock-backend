@@ -1,10 +1,11 @@
 {
   "name": "mock-backend",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "andrewpmckenzie",
   "repository": "https://github.com/andrewpmckenzie/mock-backend.git",
   "scripts": {
-    "build": "webpack --mode=production --devtool= ",
+    "build": "webpack --mode=production",
+    "prepublish": "npm run lint-project && npm run test && npm run build",
     "start": "webpack-dev-server --mode=development",
     "test": "npm run test-e2e-once",
     "test-e2e-once": "karma start --single-run",
@@ -25,6 +26,15 @@
       "git add"
     ]
   },
+  "main": "./dist/mock-backend.js",
+  "unpkg": "./dist/mock-backend.js",
+  "files": [
+    "dist/mock-backend.js",
+    "example/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
   "dependencies": {
     "fetch-mock": "^6.5.2",
     "nise": "^1.4.8",
