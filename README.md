@@ -19,7 +19,12 @@ responses from within the client.
             ({ status: 200, body: { secret: 'treasure' } }) :
             ({ status: 403, body: 'You do not have access to /bar' }) 
       },
-    ])
+    ], {
+      defaultConfig: {
+        // How requests that don't match a handler are treated (default: 'ERROR')
+        unclaimedRequests: 'ERROR' /* or 'PASS_THROUGH' */
+      }
+    })
   </script>
 
   <!-- ... your app html ... --> 
@@ -29,3 +34,4 @@ responses from within the client.
 
  - [Request object](src/lib/interface/Request.ts)
  - [Response object](src/lib/interface/Response.ts)
+ - [defaultConfig options](src/lib/interface/MockBackendConfig.ts)

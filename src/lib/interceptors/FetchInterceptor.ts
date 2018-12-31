@@ -10,9 +10,18 @@ export class FetchInterceptor extends AbstractInterceptor {
       return;
     }
 
-    mock('*', (url, {
-      method = 'GET', body = '', headers = {},
-    } = {}) => new Promise((resolve) => {
+    let passThroughNextRequest = false;
+    const fetchMock = mock(() => {
+      if (passThroughNextRequest) {
+        passThroughNextRequest = false;
+        return false;
+      } else {
+        return true;
+      }
+    }, (url, opt = {}) => new Promise((resolve) => {
+      const method = opt.method || 'GET';
+      const body = opt.body || '';
+      const headers = opt.headers || {};
       const normalizedBody = typeof body === 'string' ? body : JSON.stringify(body);
       // TODO: extract fetch headers
       const normalizedHeaders = {};
@@ -23,8 +32,18 @@ export class FetchInterceptor extends AbstractInterceptor {
         resolve(mockResponse);
       };
 
-      this.receivedRequestSubject.next({request, respond});
+      const passThrough = () => {
+        passThroughNextRequest = true;
+        fetch(url, opt).then((r) => resolve(r));
+      };
+
+      this.receivedRequestSubject.next({request, respond, passThrough});
     }));
+
+    const fetchMockConfig = (fetchMock as {} as {config: {fallbackToNetwork: boolean, warnOnFallback: boolean}}).config;
+    fetchMockConfig.fallbackToNetwork = true;
+    fetchMockConfig.warnOnFallback = true;
+
     this.isRunning = true;
   }
 

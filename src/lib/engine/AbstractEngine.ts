@@ -33,6 +33,13 @@ export abstract class AbstractEngine implements Engine {
     return this.isRunningMutable;
   }
 
-  protected abstract onStart(): void;
-  protected abstract onStop(): void;
+  // Hooks
+
+  protected onStart(): void {
+    // no-op
+  }
+
+  protected onStop(): void {
+    // no-op
+  }
 }

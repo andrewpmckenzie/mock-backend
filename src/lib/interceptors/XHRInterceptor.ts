@@ -4,6 +4,7 @@ import {AbstractInterceptor} from './AbstractInterceptor';
 
 export class XHRInterceptor extends AbstractInterceptor {
   private xhr: FakeXMLHttpRequestStatic|null = null;
+  private passThroughNextRequest = false;
 
   public start() {
     if (this.xhr) {
@@ -11,6 +12,15 @@ export class XHRInterceptor extends AbstractInterceptor {
     }
 
     this.xhr = fakeXhr.useFakeXMLHttpRequest();
+    this.xhr.useFilters = true;
+    this.xhr.addFilter((method, url, async, username, password) => {
+      if (this.passThroughNextRequest) {
+        this.passThroughNextRequest = false;
+        return true;
+      } else {
+        return false;
+      }
+    });
     this.xhr.onCreate = this.handleFakeXHR.bind(this);
   }
 
@@ -42,8 +52,19 @@ export class XHRInterceptor extends AbstractInterceptor {
         );
       };
 
+      const passThrough = () => {
+          this.passThroughNextRequest = true;
+
+          const realRequest = new XMLHttpRequest();
+          realRequest.addEventListener('load', () => {
+            xhr.respond(realRequest.status, realRequest.getAllResponseHeaders(), realRequest.responseText);
+          });
+          realRequest.open(xhr.method, xhr.url, xhr.async, xhr.username, xhr.password);
+          realRequest.send(xhr.requestBody);
+      };
+
       window.setTimeout(() => {
-        this.receivedRequestSubject.next({request, respond});
+        this.receivedRequestSubject.next({request, respond, passThrough});
       });
     };
 

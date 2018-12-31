@@ -21,6 +21,7 @@ export interface Request {
 export interface RespondableRequest {
   request: Request;
   respond: (response: Response) => void;
+  passThrough: () => void;
 }
 
 export interface RespondableRequestWithMetadata extends RespondableRequest {

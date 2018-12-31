@@ -7,24 +7,29 @@ import {ConnectedApp} from './components/ConnectedApp';
 import {StyleBase} from './components/styles/StyleBase';
 import {StyledComponentsDemo} from './components/styles/StyledComponentsDemo';
 import {AccumulatorEngine} from './lib/engine/AccumulatorEngine';
+import {PersistenceEngine} from './lib/engine/PersistenceEngine';
 import {RequestHandlerEngine} from './lib/engine/RequestHandlerEngine';
 import {RequestInterceptorEngine} from './lib/engine/RequestInterceptorEngine';
 import {FetchInterceptor} from './lib/interceptors/FetchInterceptor';
 import {XHRInterceptor} from './lib/interceptors/XHRInterceptor';
-import {Handler, Interceptor} from './lib/interface';
+import {Handler, Interceptor, MockBackendConfig} from './lib/interface';
 import {Engine} from './lib/interface/Engine';
 import {initStore, MockBackendAction, MockBackendState} from './lib/store';
 
 export class MockBackend {
   public static create(handlers: Handler[], {
+    defaultConfig = {} as MockBackendConfig,
     fixtureElementId = 'mock-backend',
     interceptors = [new XHRInterceptor(), new FetchInterceptor()],
   } = {}): MockBackend {
-    return new MockBackend(handlers, interceptors, fixtureElementId).init();
+    return new MockBackend(handlers, interceptors, fixtureElementId, defaultConfig).init();
   }
 
-  public static styleDemo({fixtureElementId = 'mock-backend'} = {}): MockBackend {
-    return new MockBackend([], [], fixtureElementId).debugStyles();
+  public static styleDemo({
+      defaultConfig = {} as MockBackendConfig,
+      fixtureElementId = 'mock-backend',
+  } = {}): MockBackend {
+    return new MockBackend([], [], fixtureElementId, defaultConfig).debugStyles();
   }
 
   private engine: Engine;
@@ -34,10 +39,12 @@ export class MockBackend {
       handlers: Handler[],
       interceptors: Interceptor[],
       private fixtureElId: string,
+      private defaultConfig: MockBackendConfig,
   ) {
     this.engine = new AccumulatorEngine([
         new RequestInterceptorEngine(interceptors),
         new RequestHandlerEngine(handlers),
+        new PersistenceEngine(defaultConfig),
     ]);
     this.store = initStore(this.engine.actionEpic);
   }
@@ -79,7 +86,7 @@ export class MockBackend {
   }
 
   private renderStyleDemo() {
-    ReactDOM.render((<StyledComponentsDemo />), this.fixtureEl);
+    ReactDOM.render((<Provider store={this.store}><StyledComponentsDemo /></Provider>), this.fixtureEl);
   }
 
   private appendFixtureElement() {

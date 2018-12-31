@@ -45,7 +45,8 @@ module.exports = (env, {mode}) => ({
   devServer: {
       contentBase: [__dirname],
       open: true,
-      openPage: 'example/index.html',
+      openPage: 'examples/index.html',
+      publicPath: '/dist/',
       compress: true,
       port: 9000
   }

@@ -4,5 +4,6 @@
 
 # Artifacts
 dist
+build
 node_modules
 test_run

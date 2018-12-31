@@ -1,5 +1,5 @@
 import {Reducer} from 'redux';
-import {RespondableRequestWithMetadata} from '../../interface';
+import {isPassthroughHandler, RespondableRequestWithMetadata} from '../../interface';
 import {MockBackendAction} from '../actions';
 import {RequestsState} from '../state';
 
@@ -41,7 +41,12 @@ export const requestsReducer: Reducer<RequestsState, MockBackendAction> = (state
 
     case 'REQUEST::ASSIGN_HANDLER':
       const {handler} = action;
-      return updateRequest(state, action.requestId, (r) => ({...r, handler}));
+      const isPassthrough = isPassthroughHandler(handler);
+      return updateRequest(state, action.requestId, (r) => ({
+        ...r,
+        handleAt: isPassthrough ? new Date() : r.handleAt,
+        handler,
+      }));
 
     case 'REQUEST::TICK':
       return updateRequest(state, action.requestId, tick);

@@ -22,7 +22,11 @@
           claim: (r) => r.urlParts.path.startsWith('/error'),
           handle: (r) => ({ status: 500, body: {OK: 'NOT-OK'} })
         }
-      ]);
+      ], {
+        defaultConfig: {
+          unclaimedRequests: 'PASS_THROUGH'
+        }
+      });
     </script>
 
     <!-- Setup app -->

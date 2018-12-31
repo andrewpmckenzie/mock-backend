@@ -1,4 +1,4 @@
-import {Handler, Request} from '../src/lib/interface';
+import {Handler, PassthroughHandler, Request, RespondingHandler} from '../src/lib/interface';
 import {MockBackend} from '../src/MockBackend';
 import {async} from './helpers/async';
 import {xhr} from './helpers/xhr';
@@ -12,27 +12,40 @@ const RESPONSE_DELAY_MS = 5000;
 const POLLING_MS = 500;
 
 describe('E2E', () => {
-  let mockBackend: MockBackend;
-  let handlers: Handler[];
-  let containerEl: HTMLElement;
-
   beforeAll(() => {
     jasmine.clock().install();
   });
 
+  let mockBackend: MockBackend;
+  let respondingHandlers: RespondingHandler[];
+  let passThroughHandlers: PassthroughHandler[];
+  let containerEl: HTMLElement;
+
   beforeEach(() => {
     jasmine.clock().mockDate(new Date(2019, 0, 1));
 
-    handlers = [
+    respondingHandlers = [
       {
-        claim: jasmine.createSpy('claim', (r: Request) => r.url.includes('/valid'))
-            .and.callThrough(),
-        handle: jasmine.createSpy('handle', (r: Request) => ({status: 200, body: 'VALID_RESPONSE'}))
-            .and.callThrough(),
+        claim: (r) => r.url.includes('/valid'),
+        handle: (r) => ({status: 200, body: 'VALID_RESPONSE'}),
+      },
+      {
+        claim: (r) => r.url.includes('/static/with-responding-handler.json'),
+        handle: (r) => ({status: 200, body: { source: 'handler' }}),
       },
     ];
 
-    mockBackend = MockBackend.create(handlers, {fixtureElementId: FIXTURE_ID});
+    spyOn(respondingHandlers[0], 'claim').and.callThrough();
+    spyOn(respondingHandlers[0], 'handle').and.callThrough();
+
+    passThroughHandlers = [
+      {
+        claim: (r: Request) => r.url.includes('/static/with-pass-through-handler.json'),
+        passThrough: true,
+      },
+    ];
+
+    mockBackend = MockBackend.create([...respondingHandlers, ...passThroughHandlers], {fixtureElementId: FIXTURE_ID});
     containerEl = document.getElementById(FIXTURE_ID)!;
   });
 
@@ -61,6 +74,19 @@ describe('E2E', () => {
       expect(await response.text()).toBe('No handler available for this request');
     }));
 
+    it('passes through when encountering a passthrough handler', async(async () => {
+      const passThroughResponsePromise = fetch('/static/with-pass-through-handler.json').then((r) => r.json());
+      const dontPassThroughResponsePromise = fetch('/static/with-responding-handler.json').then((r) => r.json());
+
+      jasmine.clock().tick(RESPONSE_DELAY_MS);
+
+      const passThroughResponse = await passThroughResponsePromise;
+      const dontPassThroughResponse = await dontPassThroughResponsePromise;
+
+      expect(passThroughResponse.source).toEqual('file');
+      expect(dontPassThroughResponse.source).toEqual('handler');
+    }));
+
     it('provides request information to #claim() and #handle()', async(async () => {
       fetch('http://www.example.com:81/valid/foo?Q1=V1&Q2=V2', {
         body: JSON.stringify({B1: 'V3'}),
@@ -85,12 +111,12 @@ describe('E2E', () => {
           ]),
         },
       };
-      expect(handlers[0].claim).toHaveBeenCalledWith(expectedRequest);
-      expect(handlers[0].handle).not.toHaveBeenCalled();
+      expect(respondingHandlers[0].claim).toHaveBeenCalledWith(expectedRequest);
+      expect(respondingHandlers[0].handle).not.toHaveBeenCalled();
 
       jasmine.clock().tick(RESPONSE_DELAY_MS);
 
-      expect(handlers[0].handle).toHaveBeenCalledWith(expectedRequest);
+      expect(respondingHandlers[0].handle).toHaveBeenCalledWith(expectedRequest);
     }));
   });
 
@@ -111,6 +137,21 @@ describe('E2E', () => {
       const {status, response} = await responsePromise;
       expect(status).toBe(404);
       expect(response).toBe('No handler available for this request');
+    }));
+
+    it('passes through when encountering a passthrough handler', async(async () => {
+      const passThroughResponsePromise = xhr('/static/with-pass-through-handler.json')
+          .then((r) => JSON.parse(r.responseText));
+      const dontPassThroughResponsePromise = xhr('/static/with-responding-handler.json')
+          .then((r) => JSON.parse(r.responseText));
+
+      jasmine.clock().tick(RESPONSE_DELAY_MS);
+
+      const passThroughResponse = await passThroughResponsePromise;
+      const dontPassThroughResponse = await dontPassThroughResponsePromise;
+
+      expect(passThroughResponse.source).toEqual('file');
+      expect(dontPassThroughResponse.source).toEqual('handler');
     }));
 
     it('provides request information to #claim() and #handle()', async(async () => {
@@ -137,12 +178,12 @@ describe('E2E', () => {
           ]),
         },
       };
-      expect(handlers[0].claim).toHaveBeenCalledWith(expectedRequest);
-      expect(handlers[0].handle).not.toHaveBeenCalled();
+      expect(respondingHandlers[0].claim).toHaveBeenCalledWith(expectedRequest);
+      expect(respondingHandlers[0].handle).not.toHaveBeenCalled();
 
       jasmine.clock().tick(RESPONSE_DELAY_MS);
 
-      expect(handlers[0].handle).toHaveBeenCalledWith(expectedRequest);
+      expect(respondingHandlers[0].handle).toHaveBeenCalledWith(expectedRequest);
     }));
   });
 
@@ -200,5 +241,44 @@ describe('E2E', () => {
       expect(containerEl.innerText).not.toContain('/valid/foobar');
       expect(await responsePromise.then((r) => r.text())).toEqual('VALID_RESPONSE');
     }));
+  });
+
+  describe('defaultConfig', () => {
+    describe('unclaimedRequests', () => {
+      beforeEach(() => {
+        // All these tests set up mockBackend
+        mockBackend.destroy();
+        mockBackend = undefined as any;
+        containerEl = undefined as any;
+      });
+
+      it('returns an error for unclaimed requests when "ERROR"', async(async () => {
+        mockBackend = MockBackend.create([], {
+          defaultConfig: {unclaimedRequests: 'ERROR'},
+          fixtureElementId: FIXTURE_ID,
+        });
+
+        const responsePromise = fetch('/static/unhandled.json');
+        jasmine.clock().tick(RESPONSE_DELAY_MS);
+        const response = await responsePromise;
+
+        expect(response.status).toBe(404);
+        expect(await response.text()).toBe('No handler available for this request');
+      }));
+
+      it('passes through unclaimed requests when "PASS_THROUGH"', async(async () => {
+        mockBackend = MockBackend.create([], {
+          defaultConfig: {unclaimedRequests: 'PASS_THROUGH'},
+          fixtureElementId: FIXTURE_ID,
+        });
+
+        const responsePromise = fetch('/static/unhandled.json');
+        jasmine.clock().tick(RESPONSE_DELAY_MS);
+        const response = await responsePromise;
+
+        expect(response.status).toBe(200);
+        expect(await response.json()).toEqual({source: 'file'});
+      }));
+    });
   });
 });

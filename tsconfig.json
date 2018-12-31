@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
+    "outDir": "./build/",
     "sourceMap": true,
     "lib": ["es2018", "dom"],
     "noImplicitAny": true,
