@@ -1,6 +1,6 @@
 {
   "name": "mock-backend",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "andrewpmckenzie",
   "repository": "https://github.com/andrewpmckenzie/mock-backend.git",
   "scripts": {
@@ -17,6 +17,7 @@
     "lint-project": "tslint --project `pwd`",
     "lint-staged": "lint-staged"
   },
+  "runkitExample": "console.log('MockBackend only works in the client.')",
   "pre-commit": [
     "lint-staged"
   ],
