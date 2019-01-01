@@ -267,9 +267,9 @@ describe('E2E', () => {
           fixtureElementId: FIXTURE_ID,
         });
 
-        let response: Response|null = null;
-        fetch('/static/unhandled.json').then((r) => response = r);
+        const responsePromise = fetch('/static/unhandled.json');
         await tick(RESPONSE_DELAY_MS);
+        const response = await responsePromise;
 
         expect(response!.status).toBe(200);
         expect(await response!.json()).toEqual({source: 'file'});
