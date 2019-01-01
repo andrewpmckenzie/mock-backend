@@ -76,15 +76,13 @@ describe('E2E', () => {
     }));
 
     it('passes through when encountering a passthrough handler', async(async () => {
-      let passThroughResponse: {source: string}|null = null;
-      let dontPassThroughResponse: {source: string}|null = null;
-      fetch('/static/with-pass-through-handler.json').then((r) => r.json()).then((j) => passThroughResponse = j);
-      fetch('/static/with-responding-handler.json').then((r) => r.json()).then((j) => dontPassThroughResponse = j);
+      const passThroughResponsePromise = fetch('/static/with-pass-through-handler.json').then((r) => r.json());
+      const dontPassThroughResponsePromise = fetch('/static/with-responding-handler.json').then((r) => r.json());
 
       await tick(RESPONSE_DELAY_MS);
 
-      expect(passThroughResponse!.source).toEqual('file');
-      expect(dontPassThroughResponse!.source).toEqual('handler');
+      expect((await passThroughResponsePromise)!.source).toEqual('file');
+      expect((await dontPassThroughResponsePromise)!.source).toEqual('handler');
     }));
 
     it('provides request information to #claim() and #handle()', async(async () => {
@@ -140,16 +138,15 @@ describe('E2E', () => {
     }));
 
     it('passes through when encountering a passthrough handler', async(async () => {
-      let passThroughResponse: {source: string}|null = null;
-      let dontPassThroughResponse: {source: string}|null = null;
-
-      xhr('/static/with-pass-through-handler.json').then((r) => passThroughResponse = JSON.parse(r.responseText));
-      xhr('/static/with-responding-handler.json').then((r) => dontPassThroughResponse = JSON.parse(r.responseText));
+      const passThroughResponsePromise = xhr('/static/with-pass-through-handler.json')
+          .then((r) => JSON.parse(r.responseText));
+      const dontPassThroughResponsePromise = xhr('/static/with-responding-handler.json')
+          .then((r) => JSON.parse(r.responseText));
 
       await tick(RESPONSE_DELAY_MS);
 
-      expect(passThroughResponse!.source).toEqual('file');
-      expect(dontPassThroughResponse!.source).toEqual('handler');
+      expect((await passThroughResponsePromise)!.source).toEqual('file');
+      expect((await dontPassThroughResponsePromise)!.source).toEqual('handler');
     }));
 
     it('provides request information to #claim() and #handle()', async(async () => {
