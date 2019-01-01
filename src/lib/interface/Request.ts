@@ -31,6 +31,7 @@ export interface RespondableRequestWithMetadata extends RespondableRequest {
   pauseTimeMs?: number;
   percentProgress?: number;
   handlingPaused?: boolean;
+  responseDelay?: number;
   handler?: Handler;
   handleAt?: Date|null;
 }

@@ -1,15 +1,20 @@
 import {Observable, timer} from 'rxjs';
 import {distinctUntilChanged, filter, flatMap, map, withLatestFrom} from 'rxjs/operators';
 import {
-  Handler, isPassthroughHandler,
+  Handler,
+  isPassthroughHandler,
   RequestWithMetadata,
   UnclaimedRequestStrategy,
 } from '../interface';
 import {
-  assignHandler, getRequestsReadyForHandling,
+  assignHandler,
+  getConfig,
+  getRequestsReadyForHandling,
   getRequestsWithoutHandlers,
-  getTickingRequests, getUnclaimedRequestStrategy, handled,
-  MockBackendState, tick,
+  getTickingRequests,
+  handled,
+  MockBackendState,
+  tick,
 } from '../store';
 import {MockBackendAction} from '../store/actions';
 import {AbstractEngine} from './AbstractEngine';
@@ -26,8 +31,11 @@ export const DEFAULT_PASSTHROUGH_HANDLER: Handler = {
   passThrough: true,
 };
 
+const DEFAULT_RESPONSE_DELAY = 5000;
+const TICK_RATE_MS = 50;
+
 export class RequestHandlerEngine extends AbstractEngine {
-  private static TICK_RATE_MS = 500;
+  private responseDelay = DEFAULT_RESPONSE_DELAY;
 
   private unclaimedRequestStrategy: UnclaimedRequestStrategy = 'ERROR';
   private handlers: Handler[];
@@ -37,7 +45,7 @@ export class RequestHandlerEngine extends AbstractEngine {
       ($action, $store) => this.assignHandlerEpic($action, $store),
       ($action, $store) => this.tickEpic($action, $store),
       ($action, $store) => this.handleEpic($action, $store),
-      ($action, $store) => this.updateUnclaimedRequestStrategyEpic($action, $store),
+      ($action, $store) => this.handleConfigUpdate($action, $store),
     ]);
 
     let anonHandlerCounter = 1;
@@ -48,7 +56,6 @@ export class RequestHandlerEngine extends AbstractEngine {
       $action: Observable<MockBackendAction>,
       $store: Observable<MockBackendState>,
   ): Observable<MockBackendAction> {
-    const {TICK_RATE_MS} = RequestHandlerEngine;
     return timer(TICK_RATE_MS, TICK_RATE_MS).pipe(
       filter(() => this.isRunning),
       withLatestFrom($store),
@@ -64,7 +71,10 @@ export class RequestHandlerEngine extends AbstractEngine {
     return $store.pipe(
         map(getRequestsWithoutHandlers),
         filter((requests) => requests.length > 0),
-        flatMap((requests) => requests.map((r) => assignHandler(r.id, this.getHandler(r)))),
+        flatMap((requests) => requests.map((r) => {
+          const handler = this.getHandler(r);
+          return assignHandler(r.id, handler, isPassthroughHandler(handler) ? 0 : this.responseDelay);
+        })),
     );
   }
 
@@ -90,15 +100,18 @@ export class RequestHandlerEngine extends AbstractEngine {
     );
   }
 
-  private updateUnclaimedRequestStrategyEpic(
+  private handleConfigUpdate(
       $action: Observable<MockBackendAction>,
       $store: Observable<MockBackendState>,
   ): Observable<MockBackendAction> {
     return $store.pipe(
-        map(getUnclaimedRequestStrategy),
+        map(getConfig),
         distinctUntilChanged(),
-        map((newStrategy) => {
-          this.unclaimedRequestStrategy = newStrategy || 'ERROR';
+        map((config) => {
+          this.unclaimedRequestStrategy = config.unclaimedRequests || 'ERROR';
+          if (typeof config.delayBeforeResponding === 'number') {
+            this.responseDelay = config.delayBeforeResponding;
+          }
         }),
         // Don't ever fire an action
         filter(() => false),

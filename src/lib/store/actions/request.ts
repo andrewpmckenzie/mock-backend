@@ -13,10 +13,11 @@ export interface AssignHandlerAction {
   type: 'REQUEST::ASSIGN_HANDLER';
   requestId: number;
   handler: Handler;
+  responseDelay: number;
 }
 
-export function assignHandler(requestId: number, handler: Handler): AssignHandlerAction {
-  return {type: 'REQUEST::ASSIGN_HANDLER', requestId, handler};
+export function assignHandler(requestId: number, handler: Handler, responseDelay: number): AssignHandlerAction {
+  return {type: 'REQUEST::ASSIGN_HANDLER', requestId, handler, responseDelay};
 }
 
 export interface TickAction {

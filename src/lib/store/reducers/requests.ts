@@ -3,8 +3,6 @@ import {isPassthroughHandler, RespondableRequestWithMetadata} from '../../interf
 import {MockBackendAction} from '../actions';
 import {RequestsState} from '../state';
 
-const DEFAULT_DELAY = 5000;
-
 function updateRequest(
     state: RequestsState,
     requestId: number,
@@ -23,11 +21,11 @@ function updateRequest(
 }
 
 function tick(request: RespondableRequestWithMetadata): RespondableRequestWithMetadata {
-  if (request.handlingPaused) {
+  if (request.handlingPaused || !request.handleAt) {
     return request;
   }
 
-  const handleAt = request.handleAt || new Date(request.received.getTime() + DEFAULT_DELAY);
+  const {handleAt} = request;
   const pauseAdjustedReceivedTime = request.received.getTime() + (request.pauseTimeMs || 0);
   const percentProgress = Math.min(1,
       (Date.now() - pauseAdjustedReceivedTime) / (handleAt.getTime() - pauseAdjustedReceivedTime));
@@ -40,12 +38,12 @@ export const requestsReducer: Reducer<RequestsState, MockBackendAction> = (state
       return [...state, action.respondableRequest];
 
     case 'REQUEST::ASSIGN_HANDLER':
-      const {handler} = action;
-      const isPassthrough = isPassthroughHandler(handler);
+      const {handler, responseDelay} = action;
       return updateRequest(state, action.requestId, (r) => ({
         ...r,
-        handleAt: isPassthrough ? new Date() : r.handleAt,
+        handleAt: new Date(Date.now() + responseDelay),
         handler,
+        responseDelay,
       }));
 
     case 'REQUEST::TICK':
@@ -68,7 +66,7 @@ export const requestsReducer: Reducer<RequestsState, MockBackendAction> = (state
     case 'REQUEST::UNPAUSE':
       return updateRequest(state, action.requestId, (r) => ({
         ...r,
-        handleAt: new Date(Date.now() + ((1 - (r.percentProgress || 0)) * DEFAULT_DELAY)),
+        handleAt: new Date(Date.now() + ((1 - (r.percentProgress || 0)) * (r.responseDelay || 0))),
         handlingPaused: false,
         pauseTimeMs: r.pausedSince ? (r.pauseTimeMs || 0) + Date.now() - r.pausedSince.getTime() : r.pauseTimeMs,
         pausedSince: null,

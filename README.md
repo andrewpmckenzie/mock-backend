@@ -23,6 +23,9 @@ responses from within the client.
       defaultConfig: {
         // How requests that don't match a handler are treated (default: 'ERROR')
         unclaimedRequests: 'ERROR' /* or 'PASS_THROUGH' */
+
+        // Time to wait (ms) before sending a response {default: 5000}
+        delayBeforeResponding: 2500,
       }
     })
   </script>
