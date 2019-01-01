@@ -1,0 +1,43 @@
+<!HTML>
+
+<html>
+  <head>
+    <title>Blog app</title>
+  </head>
+  <body>
+    <!-- Mock the backend -->
+
+    <script type="text/javascript" src="../dist/mock-backend.js"></script>
+    <script>
+      const mockPosts = [
+        {title: 'Foo', body: 'Bar'}
+      ];
+      const mockMeta = {
+        canPost: true,
+        title: 'Foo\'s blog'
+      };
+
+      mockBackend([
+        { claim: (r) => r.url === '/posts' && r.method === 'GET', handle: (r) => ({status: 200, body: mockPosts}) },
+        { claim: (r) => r.url === '/posts' && r.method === 'POST', handle: (r) => {
+          if ( (r.bodyJson.body + r.bodyJson.title).toLowerCase().includes('poop')) {
+            return {status:400, body: 'Posts cannot contain "poop"'}
+          }
+          mockPosts.push(r.bodyJson);
+          return {status: 200};
+        }},
+        { claim: (r) => r.url === '/meta', handle: (r) => ({status: 200, body: mockMeta}) },
+      ], {
+        defaultConfig: {
+          unclaimedRequests: 'PASS_THROUGH',
+          delayBeforeResponding: 4000
+        }
+      });
+    </script>
+
+    <!-- Load the app -->
+
+    <script type="text/javascript" src="app/load.js#blog.jsx"></script>
+    <div id="app"></div>
+  </body>
+</html>
