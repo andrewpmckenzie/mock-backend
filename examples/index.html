@@ -2,7 +2,26 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8"/>
-    <title>MockBackend Example</title>
+    <title>MockBackend Examples</title>
+    <style>
+      body {
+        font-family: 'Helvetica Neue', Helvetica, arial, sans-serif;
+        padding: 24px;
+      }
+
+      img {
+        height: 24px;
+        margin: 0 24px;
+        width: 24px;
+      }
+
+      hr {
+        border: none;
+        border-top: solid 4px #78909C;
+        margin-left: 0;
+        width: 24px;
+      }
+    </style>
   </head>
 
   <body>
@@ -12,144 +31,26 @@
     <script src="../dist/mock-backend.js"></script>
     <script>
       mockBackend([
-        {
-          id: 'user-handler',
-          claim: (r) => r.urlParts.path.startsWith('/users/'),
-          handle: (r) => ({ status: 200, body: {OK: 'OK'} })
-        },
-        {
-          id: 'error-handler',
-          claim: (r) => r.urlParts.path.startsWith('/error'),
-          handle: (r) => ({ status: 500, body: {OK: 'NOT-OK'} })
-        }
-      ], {
-        defaultConfig: {
-          unclaimedRequests: 'PASS_THROUGH',
-          delayBeforeResponding: 2500,
-        }
-      });
+        { claim: (r) => r.url.includes('/location'), handle: (r) => ({ status: 200, body: 'World' }) }
+      ]);
     </script>
 
-    <!-- Setup app -->
-
+    <h1>
+      Hello, <span id="location">
+      <img src="https://cdnjs.cloudflare.com/ajax/libs/galleriffic/2.0.1/css/loader.gif" alt="loading" />
+    </span>
+    </h1>
     <script>
-      ((window) => {
-        let currentSubmitId = 0;
-
-        window.handleFormSubmit = function (e) {
-          e.preventDefault();
-
-          const resultContainer = document.getElementById('result');
-
-          const formData = new FormData(e.target);
-          const url = formData.get('url');
-          const doPost = !!formData.get('body').trim();
-          const body = formData.get('body') || undefined;
-          const api = formData.get('api');
-          const method = doPost ? 'POST' : 'GET';
-
-          const submitId = ++currentSubmitId;
-          const displayResponse = (status, body) => {
-            if (submitId !== currentSubmitId) {
-              return;
-            }
-
-            resultContainer.innerText = [
-              `Status: ${status}`,
-              ``,
-              `=== BODY ===`,
-              `${JSON.stringify(body, null, 2)}`
-            ].join('\n');
-          };
-
-          switch (api) {
-            case 'fetch':
-              fetch(url, {method, body})
-                .then((r) => r.body.getReader().read().then((encodedBody) => {
-                  const body = new TextDecoder('utf-8').decode(encodedBody.value);
-                  displayResponse(r.status, body);
-                }));
-              break;
-            case 'xhr':
-              const request = new XMLHttpRequest();
-              request.addEventListener('load', ({target: {status, response}}) => displayResponse(status, response));
-              request.open(method, url);
-              request.send(body);
-              break;
-            default:
-              throw new Error(`Unknown API: ${api}`)
-          }
-
-          resultContainer.innerText = "Loading...";
-        }
-      })(this);
+      fetch('/location')
+        .then((r) => r.text())
+        .then((location) => document.getElementById('location').innerText = location)
     </script>
 
-    <div class="container">
-      <div>
-        <form onsubmit="handleFormSubmit(event)">
-          <div class="formComponent">
-            <b>API</b>
-            <label><input type="radio" name="api" value="fetch" /> Fetch</label>
-            <label><input type="radio" name="api" value="xhr" checked /> XHR</label>
-          </div>
-          <hr>
-          <input required type="text" placeholder="URL" name="url" value="/users/30" />
-          <hr>
-          <textarea placeholder="Request body (will POST if provided)" name="body" rows="10"></textarea>
-          <hr>
-          <button type="submit">Submit</button>
-        </form>
-      </div>
+    <hr>
 
-      <code id="result">
-        Result will appear here.
-      </code>
-    </div>
-
-    <style>
-      .container {
-        display: flex;
-        justify-content: center;
-        padding-top: 24px;
-      }
-
-      #result {
-        border: solid 1px #aaa;
-        margin-left: 24px;
-        padding: 24px;
-        white-space: pre;
-        width: 400px;
-      }
-
-      form {
-        border: solid 1px #aaa;
-        display: flex;
-        flex-direction: column;
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        font-size: 12px;
-        width: 300px;
-      }
-
-      input, textarea, button, .formComponent {
-        border: none 0 transparent;
-        font-size: 12px;
-        padding: 12px 24px;
-      }
-
-      hr {
-        border: 0 none transparent;
-        border-top: dotted 1px #aaa;
-        margin: 0;
-      }
-
-      textarea {resize: none;}
-      button {cursor: pointer;}
-      label {margin-left: 12px;}
-
-      input:focus, textarea:focus, button:focus {outline: none;}
-      button:active, button:hover, button:focus {background-color: #eee;}
-    </style>
-
+    <h2>Other examples:</h2>
+    <ul>
+      <li><a href="./blog.html">Blog</a></li>
+    </ul>
   </body>
 </html>

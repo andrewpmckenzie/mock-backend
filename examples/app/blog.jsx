@@ -90,15 +90,11 @@ class Blog extends React.Component {
       }
 
       .post {
-
+        margin-bottom: 24px;
       }
 
       .post-body {
-
-      }
-
-      .post-title {
-
+        white-space: pre;
       }
 
       .form {
