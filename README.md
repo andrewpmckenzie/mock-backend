@@ -41,5 +41,5 @@ responses from within the client.
 
 ## Try it out
 
- - [Hello world](https://stackblitz.com/edit/mock-backend-hw?embed=1&file=index.html&hideExplorer=1)
- - [Example blog](https://stackblitz.com/edit/mock-backend-blog?embed=1&file=index.html&hideExplorer=1)
+ - [Hello world](https://stackblitz.com/edit/mock-backend-hw?embed=1&file=index.html)
+ - [Example blog](https://stackblitz.com/edit/mock-backend-blog?embed=1&file=index.html)
