@@ -38,3 +38,8 @@ responses from within the client.
  - [Request object](src/lib/interface/Request.ts)
  - [Response object](src/lib/interface/Response.ts)
  - [defaultConfig options](src/lib/interface/MockBackendConfig.ts)
+
+## Try it out
+
+ - [Hello world](https://stackblitz.com/edit/mock-backend-hw?embed=1&file=index.html&hideExplorer=1)
+ - [Example blog](https://stackblitz.com/edit/mock-backend-blog?embed=1&file=index.html&hideExplorer=1)
