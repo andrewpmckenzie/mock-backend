@@ -14,9 +14,10 @@
 
   Promise.all([
     loadScript('https://unpkg.com/react@16.0.0/umd/react.development.js'),
-    loadScript('https://unpkg.com/react-dom@16.0.0/umd/react-dom.development.js'),
     loadScript('https://unpkg.com/@babel/standalone@7.2.5/babel.min.js')
-  ]).then(() => {
+  ]).then(
+    () => loadScript('https://unpkg.com/react-dom@16.0.0/umd/react-dom.development.js')
+  ).then(() => {
     fetch(`app/${nextSrc}`)
       .then((r) => r.text())
       .then((script) => {

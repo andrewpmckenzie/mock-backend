@@ -92,7 +92,7 @@ export const StatusList = styled.ul`
 
   background-color: ${backgroundColor};
   border: solid 1px ${lightGreyColor};
-  border-radius: 12px;
+  border-radius: 4px;
   box-shadow: ${statusList(({boxShadow}) => boxShadow)};
   color: ${foregroundColor};
   display: flex;

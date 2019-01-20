@@ -26,7 +26,7 @@ export const themeDefaults = {
   },
 
   statusList: {
-    boxShadow: '#CFD8DC 0 0 8px 1px',
+    boxShadow: '#CFD8DC 1px 1px 4px 0',
     offset: '24px',
     position: 'BR' as STATUS_POSITION,
     progressHeight: '12px',

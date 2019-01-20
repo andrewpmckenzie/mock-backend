@@ -1,83 +1,26 @@
 {
   "name": "mock-backend",
-  "version": "0.0.4",
-  "author": "andrewpmckenzie",
-  "repository": "https://github.com/andrewpmckenzie/mock-backend.git",
-  "scripts": {
-    "build": "webpack --mode=production",
-    "prepublish": "npm run lint-project && npm run test && npm run build",
-    "start": "webpack-dev-server --mode=development",
-    "test": "npm run test-e2e-once",
-    "test-e2e-once": "karma start --single-run",
-    "test-e2e": "karma start",
-    "test-screendiff": "npm run-script build && npm run test-screendiff-nobuild",
-    "test-screendiff-view": "backstop openReport --config=./test/screendiff/config.json",
-    "test-screendiff-nobuild": "backstop test --config=./test/screendiff/config.json",
-    "test-screendiff-approve": "backstop approve --config=./test/screendiff/config.json",
-    "lint-project": "tslint --project `pwd`",
-    "lint-staged": "lint-staged"
+  "description": "An in-browser framework for simulating backend responses to `fetch()` and `XHR` requests.",
+  "repository": "https://github.com/andrewpmckenzie/mock-backend",
+  "license": "MIT",
+  "devDependencies": {
+    "lint-staged": "^8.1.0",
+    "pre-commit": "^1.2.2",
+    "tslint": "^5.12.0",
+    "typescript": "^3.2.2"
   },
-  "runkitExample": "console.log('MockBackend only works in the client.')",
+  "dependencies": {},
   "pre-commit": [
     "lint-staged"
   ],
+  "scripts": {
+    "lint-project": "tslint --project `pwd`",
+    "lint-staged": "lint-staged"
+  },
   "lint-staged": {
     "*.{ts, tsx, js, jsx}": [
       "tslint --fix",
       "git add"
     ]
-  },
-  "main": "./dist/mock-backend.js",
-  "unpkg": "./dist/mock-backend.js",
-  "files": [
-    "dist/mock-backend.js",
-    "example/*",
-    "README.md",
-    "LICENSE"
-  ],
-  "license": "MIT",
-  "dependencies": {
-    "fetch-mock": "^6.5.2",
-    "nise": "^1.4.8",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
-    "react-redux": "^6.0.0",
-    "redux": "^4.0.1",
-    "redux-observable": "^1.0.0",
-    "reselect": "^4.0.0",
-    "rxjs": "^6.3.3",
-    "styled-components": "^4.1.2",
-    "styled-icons": "^5.5.0"
-  },
-  "devDependencies": {
-    "@types/fetch-mock": "^6.0.4",
-    "@types/jasmine": "^3.3.5",
-    "@types/nise": "^1.4.0",
-    "@types/react": "^16.7.13",
-    "@types/react-dom": "^16.0.11",
-    "@types/react-redux": "^6.0.11",
-    "@types/redux": "^3.6.0",
-    "@types/styled-components": "^4.1.4",
-    "awesome-typescript-loader": "^5.2.1",
-    "backstopjs": "^3.8.5",
-    "fork-ts-checker-webpack-plugin": "^0.5.2",
-    "jasmine": "^3.3.1",
-    "jasmine-core": "^3.3.0",
-    "karma": "^3.1.4",
-    "karma-chrome-launcher": "^2.2.0",
-    "karma-jasmine": "^2.0.1",
-    "karma-sourcemap-loader": "^0.3.7",
-    "karma-webpack": "^3.0.5",
-    "lint-staged": "^8.1.0",
-    "pre-commit": "^1.2.2",
-    "source-map-loader": "^0.2.4",
-    "ts-loader": "^5.3.2",
-    "tslint": "^5.11.0",
-    "typescript": "^3.2.2",
-    "typescript-plugin-styled-components": "^1.0.0",
-    "webpack": "^4.27.1",
-    "webpack-bundle-analyzer": "^3.0.3",
-    "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.10"
   }
 }

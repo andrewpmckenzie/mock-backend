@@ -53,7 +53,12 @@ export const requestsReducer: Reducer<RequestsState, MockBackendAction> = (state
       return updateRequest(state, action.requestId, (r) => null);
 
     case 'REQUEST::HANDLE_NOW':
-      return updateRequest(state, action.requestId, (r) => ({...r, percentProgress: 0, handleAt: new Date()}));
+      return updateRequest(state, action.requestId, (r) => ({
+        ...r,
+        handleAt: new Date(),
+        handlingPaused: false,
+        percentProgress: 0,
+      }));
 
     case 'REQUEST::PAUSE':
       return updateRequest(state, action.requestId, (r) => ({
