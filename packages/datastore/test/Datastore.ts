@@ -222,10 +222,10 @@ describe('Datastore', () => {
         expect(collection.size()).to.eql(2);
         expect(collection.get('f1')).to.eql({foo: 'A', bar: 2, bing: false});
         expect(collection.get('f2')).to.eql({foo: 'B', bar: 3, bing: true});
-        expect(collection.getMap()).to.eql(new Map([
+        expect([...collection.getMap().entries()]).to.eql([
             ['f1', {foo: 'A', bar: 2, bing: false}],
             ['f2', {foo: 'B', bar: 3, bing: true}],
-        ]));
+        ]);
       });
 
       it('throws if the collection is not empty', () => {
@@ -257,10 +257,10 @@ describe('Datastore', () => {
         collection.add('f1', {foo: 'A', bar: 2, bing: false});
         collection.add('f2', {foo: 'B', bar: 3, bing: true});
 
-        expect(collection.getMap()).to.eql(new Map([
+        expect([...collection.getMap().entries()]).to.eql([
           ['f1', {foo: 'A', bar: 2, bing: false}],
           ['f2', {foo: 'B', bar: 3, bing: true}],
-        ]));
+        ]);
       });
     });
 
