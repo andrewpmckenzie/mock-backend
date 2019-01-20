@@ -1,0 +1,53 @@
+{
+  "name": "@andrewm/datastore-core",
+  "version": "0.0.1",
+  "description": "A typed + observable datastore.",
+  "main": "dist/index.js",
+  "unpkg": "./dist/index.js",
+  "scripts": {
+    "test": "mocha",
+    "test-watch": "npm run test -- --watch --watch-extensions ts,tsx",
+    "coverage": "nyc mocha",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewpmckenzie/mock-backend.git"
+  },
+  "keywords": [
+    "datastore"
+  ],
+  "author": "andrewpmckenzie",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andrewpmckenzie/mock-backend/issues"
+  },
+  "homepage": "https://github.com/andrewpmckenzie/mock-backend#readme",
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "exclude": [
+      "**/*.d.ts"
+    ],
+    "reporter": [
+      "text",
+      "html"
+    ],
+    "temp-directory": "/tmp/coverage"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.5",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
+    "source-map-support": "^0.5.9",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.12.0",
+    "typescript": "^3.2.2"
+  },
+  "dependencies": {
+    "rxjs": "^6.3.3"
+  }
+}
