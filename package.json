@@ -39,8 +39,8 @@
   "dependencies": {
     "fetch-mock": "^6.5.2",
     "nise": "^1.4.8",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "react-redux": "^6.0.0",
     "redux": "^4.0.1",
     "redux-observable": "^1.0.0",
