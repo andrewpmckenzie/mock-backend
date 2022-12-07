@@ -68,7 +68,7 @@
     "karma-jasmine": "^2.0.1",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^3.0.5",
-    "lint-staged": "^8.1.0",
+    "lint-staged": "^13.1.0",
     "pre-commit": "^1.2.2",
     "source-map-loader": "^0.2.4",
     "ts-loader": "^5.3.2",
