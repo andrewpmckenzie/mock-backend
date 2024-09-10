@@ -37,7 +37,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "fetch-mock": "^6.5.2",
+    "fetch-mock": "^10.1.0",
     "nise": "^1.4.8",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
